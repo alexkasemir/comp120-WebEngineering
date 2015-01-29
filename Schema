@@ -1,0 +1,42 @@
+Table: User
+  id:              integer(9) PK
+  user_name:       string(12)
+  email:           string(50)
+  password:        string(50)
+  user_icon:       image
+  member_since:    timestamp
+
+Table: Friends
+  user_id:         integer(9) FK User(id)
+  follower_id:     integer(9) FK User(id)
+
+Table: Posts
+  user_id:         integer(9) FK User(id)
+  post_id:         integer(9) FK User_Post(id)
+
+Table: User_Post
+  id:              int(9) PK
+  contains_image:  bool
+  image_content:   image
+  text_content:    string(255)
+  score:           int(6)
+  time_created:    timestamp
+
+Table: Feedback
+  post_id:         int(9) FK User_Post(id)
+  user_id:         int(9) FK User(id)
+  like_or_dislike: enum('like', 'dislike')
+
+Table: Comment
+  post_id:         int(9) FK User_Post(id)
+  user_id:         int(9) FK User(id)
+  content:         string(255)
+
+Table: Album
+  id:        int(9) PK
+  name:            string(127)
+
+Table: Albums
+    album_id:        int(9) FK Album(id)
+    post_id:         int(9) FK User_Post(id)
+
