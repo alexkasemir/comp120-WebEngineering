@@ -1,9 +1,10 @@
 Table: User
   id:              integer(9) PK
-  user_name:       string(12)
-  email:           string(50)
+  user_name:       string(25) unique
+  email:           string(50) unique
   password:        string(50)
-  user_icon:       image
+  user_icon_url:   string(100)
+  active_member    boolean
   member_since:    timestamp
 
 Table: Friends
@@ -17,10 +18,13 @@ Table: Posts
 Table: User_Post
   id:              int(9) PK
   contains_image:  bool
-  image_content:   image
+  image_url:       string(100)
   text_content:    string(255)
   score:           int(6)
   time_created:    timestamp
+  time_edited      timestamp
+  active           boolean
+
 
 Table: Feedback
   post_id:         int(9) FK User_Post(id)
@@ -33,10 +37,10 @@ Table: Comment
   content:         string(255)
 
 Table: Album
-  id:        int(9) PK
+  id:              int(9) PK
   name:            string(127)
 
 Table: Albums
-    album_id:        int(9) FK Album(id)
-    post_id:         int(9) FK User_Post(id)
+  album_id:        int(9) FK Album(id)
+  post_id:         int(9) FK User_Post(id)
 
