@@ -1,27 +1,28 @@
 from django.db import models
 
 class User(models.Model):
-    username = models.CharField(max_length = 25, unique= true)
-    owner_email = models.EmailField(max_length = 50, unique= true)
+    username = models.CharField(max_length = 25, unique= True)
+    owner_email = models.EmailField(max_length = 50, unique= True)
     password = models.CharField(max_length = 50)
-    icon_URL = models.ImageField(upload_to = "", height_field = 50px, width_field = 50px)
-    active = models.BooleanField()
-    member_since = models.DateField()
+    icon_URL = models.ImageField(upload_to = "", height_field = 50, width_field = 50)
+    active = models.BooleanField(default = True)
+    member_since = models.DateField(auto_now_add = True)
     def __str__(self):
         return self.username
 
 class User_Post(models.Model):
-    contains_image = models.BooleanField()
+    contains_image = models.BooleanField(default = False)
     image_URL = models.ImageField(upload_to = "")
     text_content = models.TextField(max_length = 255)
     score = models.IntegerField()
-    time_created = models.DateField()
-    time_edited = models.DateField()
-    active = models.BooleanField()
+    time_created = models.DateField(auto_now_add = True)
+    time_edited = models.DateField(auto_now = True)
+    active = models.BooleanField(default = True)
 
 class Friends(models.Model):
-    user_id = models.ForeignKey(User)
-    follower_id = models.ForeignKey(User)
+    from_user = models.ForeignKey(User, related_name = 'from_user')
+    to_user = models.ForeignKey(User, related_name = 'to_user')
+    created = models.DateField(auto_now_add = True)
 
 class Posts(models.Model):
     user_id = models.ForeignKey(User)
