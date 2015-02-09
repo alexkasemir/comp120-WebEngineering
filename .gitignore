@@ -1,2 +1,3 @@
+virenv
 *.pyc
 secrets.py
