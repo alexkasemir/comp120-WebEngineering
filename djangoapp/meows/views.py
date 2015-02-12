@@ -5,6 +5,8 @@ from meows.models import User_Post
 from django.http import Http404
 from django.shortcuts import render
 
+
+
 def index(request):
     latest_posts = User_Post.objects.order_by('time_created')[:5]
     template = loader.get_template('meows/index.html')
@@ -20,3 +22,11 @@ def detail(request, user_post_id):
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
     return render(request, 'meows/details.html', {'user_post': user_post})
+
+def new_post(request):
+    return render(request, 'meows/new_post.html')
+
+def create_post(request):
+    user_post = User_Post.create(request.POST['text_content'])
+    user_post.save()
+    return "post created"

@@ -19,6 +19,11 @@ class User_Post(models.Model):
     time_edited = models.DateField(auto_now = True)
     active = models.BooleanField(default = True)
 
+    @classmethod
+    def create(text_cont):
+        user_post = User_Post(text_content=text_cont)
+        return user_post
+
 class Friends(models.Model):
     from_user = models.ForeignKey(User, related_name = 'from_user')
     to_user = models.ForeignKey(User, related_name = 'to_user')

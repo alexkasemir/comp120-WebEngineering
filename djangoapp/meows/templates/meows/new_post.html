@@ -1,0 +1,8 @@
+<p> page for creating a new post </p>
+
+<form action="{% url '/meows/create_post' %}" method="post">
+  {% csrf_token %}
+  <input type="text" placeholder="text content"/>
+  <input type="file" name="add an image"/>
+  <input type="submit" value="Create" />
+</form>
