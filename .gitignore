@@ -1,3 +1,4 @@
 virenv
+db.*
 *.pyc
 secrets.py
