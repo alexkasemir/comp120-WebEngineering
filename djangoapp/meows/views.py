@@ -5,6 +5,7 @@ from meows.models import User_Post
 from django.http import Http404
 from django.shortcuts import render
 
+from django.core.urlresolvers import reverse
 
 
 def index(request):
@@ -29,4 +30,5 @@ def new_post(request):
 def create_post(request):
     user_post = User_Post.create(request.POST['text_content'])
     user_post.save()
-    return "post created"
+    # return render(request, 'meows/index.html')
+    return HttpResponseRedirect('meows/index')
