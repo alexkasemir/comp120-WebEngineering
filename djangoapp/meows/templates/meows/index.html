@@ -1,0 +1,16 @@
+<h1>
+  Welcome to Purrer!
+</h1>
+<p>
+  <a href="#">create post</a>
+</p>
+
+{% if latest_posts %}
+    <ul>
+    {% for user_post in latest_posts %}
+        <li>{{ user_post.text_content }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No posts are available.</p>
+{% endif %}
