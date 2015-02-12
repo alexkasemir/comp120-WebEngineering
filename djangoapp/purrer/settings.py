@@ -84,43 +84,47 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#########################################
-#    AMAZON S3 WEB SERVICES SETTINGS    #
-#########################################
+# Media Files (User images, and Post Images)
+# Suggestion from Tyler Lubeck on Piazza
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-#This makes sure that wehn files are uploaded to S3, browsers are given
-#an HTTP header in the response. The headers in turn will tell
-#browsers that they can cache these files for a very long time
+# #########################################
+# #    AMAZON S3 WEB SERVICES SETTINGS    #
+# #########################################
 
-AWS_HEADERS = {
-    'Expires': 'Thu, 31 Dec 2099 20:00:00 EST',
-    'Cache-Control': 'max-age=94608000',
-}
+# #This makes sure that wehn files are uploaded to S3, browsers are given
+# #an HTTP header in the response. The headers in turn will tell
+# #browsers that they can cache these files for a very long time
 
-AWS_STORAGE_BUCKET_NAME = secrets.BUCKET_NAME
-AWS_ACCESS_KEY_ID = secrets.KEY_ID
-AWS_SECRET_ACCESS_KEY = secrets.ACCESS_KEY
+# AWS_HEADERS = {
+#     'Expires': 'Thu, 31 Dec 2099 20:00:00 EST',
+#     'Cache-Control': 'max-age=94608000',
+# }
 
-# Tell django-storages that when coming up with the URL for an item in S3
-# storage, keep it simple - just use this domain plus the path.
-# (If this isn't set, things get complicated). This controls how the
-# `static` template tag from `staticfiles` gets expanded, if you're using
-#it. We also use it in the next setting.
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_STORAGE_BUCKET_NAME = secrets.BUCKET_NAME
+# AWS_ACCESS_KEY_ID = secrets.KEY_ID
+# AWS_SECRET_ACCESS_KEY = secrets.ACCESS_KEY
 
-# This is used by the `static` template tag from `static`, if you're using
-# that. Or if anything else refers directly to STATIC_URL. So it's safest
-# to always set it.
-STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+# # Tell django-storages that when coming up with the URL for an item in S3
+# # storage, keep it simple - just use this domain plus the path.
+# # (If this isn't set, things get complicated). This controls how the
+# # `static` template tag from `staticfiles` gets expanded, if you're using
+# #it. We also use it in the next setting.
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-# Tell the staticfiles app to use S3Boto storage when writing the
-# collected static files (when you run `collectstatic`).
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# # This is used by the `static` template tag from `static`, if you're using
+# # that. Or if anything else refers directly to STATIC_URL. So it's safest
+# # to always set it.
+# STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 
-STATICFILES_LOCATION = 'static'
+# # Tell the staticfiles app to use S3Boto storage when writing the
+# # collected static files (when you run `collectstatic`).
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+# STATICFILES_LOCATION = 'static'
 
 
-# CONFIGURATIONS FOR MEDIA FILES (FILES USERS UPLOAD)
-MEDIAFILES_LOCATION = 'media'
-MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+# # CONFIGURATIONS FOR MEDIA FILES (FILES USERS UPLOAD)
+# MEDIAFILES_LOCATION = 'media'
+# MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+# DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'

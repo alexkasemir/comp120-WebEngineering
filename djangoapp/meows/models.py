@@ -4,7 +4,7 @@ class User(models.Model):
     username = models.CharField(max_length = 25, unique= True)
     owner_email = models.EmailField(max_length = 50, unique= True)
     password = models.CharField(max_length = 50)
-    icon_URL = models.ImageField(upload_to = "", height_field = 50, width_field = 50)
+    icon_URL = models.ImageField()
     active = models.BooleanField(default = True)
     member_since = models.DateField(auto_now_add = True)
     def __str__(self):
@@ -12,7 +12,7 @@ class User(models.Model):
 
 class User_Post(models.Model):
     contains_image = models.BooleanField(default = False)
-    image_URL = models.ImageField(upload_to = "")
+    image_URL = models.ImageField()
     text_content = models.TextField(max_length = 255)
     score = models.IntegerField()
     time_created = models.DateField(auto_now_add = True)
