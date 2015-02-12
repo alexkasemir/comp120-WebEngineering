@@ -14,12 +14,12 @@ class User_Post(models.Model):
     contains_image = models.BooleanField(default = False)
     image_URL = models.ImageField()
     text_content = models.TextField(max_length = 255)
-    score = models.IntegerField()
+    score = models.IntegerField(default = 0)
     time_created = models.DateField(auto_now_add = True)
     time_edited = models.DateField(auto_now = True)
     active = models.BooleanField(default = True)
 
-    @classmethod
+    @staticmethod
     def create(text_cont):
         user_post = User_Post(text_content=text_cont)
         return user_post

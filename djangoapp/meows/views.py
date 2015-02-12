@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from meows.models import User_Post
+from django.http import HttpResponseRedirect
 
 from django.http import Http404
 from django.shortcuts import render
@@ -28,7 +29,8 @@ def new_post(request):
     return render(request, 'meows/new_post.html')
 
 def create_post(request):
-    user_post = User_Post.create(request.POST['text_content'])
+    user_post = User_Post.create(request.POST.get('text_content'))
+
     user_post.save()
-    # return render(request, 'meows/index.html')
-    return HttpResponseRedirect('meows/index')
+    print(request.POST.get('text_content'))
+    return render(request, 'meows/details.html', {'user_post': user_post})
