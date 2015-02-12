@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 
 
 def index(request):
-    latest_posts = User_Post.objects.order_by('time_created')[:5]
+    latest_posts = User_Post.objects.order_by('-time_created')[:10]
     template = loader.get_template('meows/index.html')
     context = RequestContext(request, {
         'latest_posts': latest_posts,

@@ -4,8 +4,8 @@
     last edited: {{user_post.time_edited}} <br/>
     score: {{user_post.score}}
     picture url: {{user_post.image_URL}}
-    <img src="../../media/{{user_post.image_URL}}"/>
+    <img src="../static/{{user_post.image_URL}}"/>
 </p>
 <h2>"{{user_post.text_content}}"</h2>
 {% load staticfiles %}
-<img src="{% static "earth.jpeg" %}" alt="My image"/>
+<img src="../static/earth.jpeg" alt="My image"/>
