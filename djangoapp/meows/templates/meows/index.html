@@ -6,11 +6,15 @@
 </p>
 
 {% if latest_posts %}
-    <ul>
     {% for user_post in latest_posts %}
-        <li>{{ user_post.text_content }}</li>
+      <h3>post created by: </h3>
+      <p>
+        created at: {{user_post.time_created}} <br/>
+        last edited: {{user_post.time_edited}} <br/>
+        score: {{user_post.score}}
+      </p>
+      <h2>"{{user_post.text_content}}"</h2>
     {% endfor %}
-    </ul>
 {% else %}
-    <p>No posts are available.</p>
+    <p>There appears to be nothing here...</p>
 {% endif %}
