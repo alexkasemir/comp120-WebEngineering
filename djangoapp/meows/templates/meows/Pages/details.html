@@ -1,0 +1,22 @@
+
+{% extends "meows/Extendable/base.html" %}
+
+{% block body_content %}
+  <div class="container-post">
+    {% if user_post.text_content %}
+      <div class="post-content">
+        <h1>"{{user_post.text_content}}"</h1>
+      </div>
+    {% endif %}
+    {% if user_post.image_URL %}
+      <div class="post-content">
+        <img src="../static/{{user_post.image_URL}}"/>
+      </div>
+    {% endif %}
+  </div>
+
+  <p>
+      last edited: {{user_post.time_edited}} <br/>
+      score: {{user_post.score}}
+  </p>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "meows/Extendable/base.html" %}
+
+{% block body_content %}
+  <span class="center-block">
+    <a class="btn btn-success" href="/meows/new_post">Create Purrr</a>
+  </span>
+
+  <div class="col-mid-10 col-md-offset-1">
+    <div class="row">
+  {% if latest_posts %}
+      {% for user_post in latest_posts %}
+      <div class="col-sm-12 col-md-6">
+        <h3>post created by: </h3>
+        <p>
+          created at: {{user_post.time_created}} <br/>
+          last edited: {{user_post.time_edited}} <br/>
+          score: {{user_post.score}}
+        </p>
+        <img src="../static/{{user_post.image_URL}}"/>
+        <h2>"{{user_post.text_content}}"</h2>
+      </div>
+      {% endfor %}
+  {% else %}
+      <p>There appears to be nothing here...</p>
+  {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
