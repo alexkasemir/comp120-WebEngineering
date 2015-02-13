@@ -1,0 +1,27 @@
+.container-post {
+  width:80%;
+  background-color:white;
+  padding:10px;
+  border-width:2px;
+  border-radius: 5px;
+  border-color:black;
+  margin:0 auto;
+  background-color: #9E6417;
+  color:white;
+}
+
+.container-post h1 {
+
+  text-align: center;
+  font-style: italic;
+}
+
+.container-post img {
+  max-width:100%;
+}
+.post-header {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  border-radius: 10px;
+}

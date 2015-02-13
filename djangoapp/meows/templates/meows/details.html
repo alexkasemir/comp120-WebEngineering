@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="../static/style.css" />
-
+<link rel="stylesheet" type="text/css" href="../static/single_post.css" />
 {# Load the tag library #}
 {% load bootstrap3 %}
 
@@ -9,6 +9,7 @@
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
+
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -24,11 +25,13 @@
     </div>
 </nav>
 
+<div class="container-post">
+  <h1>{{user_post.text_content}}</h1>
+  <hr/>
+  <img src="../static/{{user_post.image_URL}}"/>
+</div>
+
 <p>
-    created at: {{user_post.time_created}} <br/>
     last edited: {{user_post.time_edited}} <br/>
     score: {{user_post.score}}
-    picture url: {{user_post.image_URL}}
-    <img src="../static/{{user_post.image_URL}}"/>
 </p>
-<h2>"{{user_post.text_content}}"</h2>
