@@ -1,10 +1,13 @@
+
 {% include "meows/base.html" %}
 
+<div class="container-post">
+  <h1>{{user_post.text_content}}</h1>
+  <hr/>
+  <img src="../static/{{user_post.image_URL}}"/>
+</div>
+
 <p>
-    created at: {{user_post.time_created}} <br/>
     last edited: {{user_post.time_edited}} <br/>
     score: {{user_post.score}}
-    picture url: {{user_post.image_URL}}
-    <img src="../static/{{user_post.image_URL}}"/>
 </p>
-<h2>"{{user_post.text_content}}"</h2>

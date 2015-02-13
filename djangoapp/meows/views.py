@@ -32,6 +32,6 @@ def new_post(request):
 
 def create_post(request):
     user_post = User_Post.create(request.POST.get('text_content'))
-
+    user_post.image_URL = request.POST.get('img_content')
     user_post.save()
     return render(request, 'meows/details.html', {'user_post': user_post})
