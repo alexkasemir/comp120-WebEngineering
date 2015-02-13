@@ -1,8 +1,5 @@
-
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-=======
-
+<link rel="stylesheet" type="text/css" href="../static/style.css" />
 
 {# Load the tag library #}
 {% load bootstrap3 %}
@@ -14,29 +11,49 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-=======
-
-=======
 {% load staticfiles %}
 
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Welcome to Purrer!</a>
+    </div>
+</nav>
 
-<h1>
-  Welcome to Purrer!
-</h1>
-<p>
-  <a href="/meows/new_post">create post</a>
-</p>
+{% block content %}
+{% endblock %}
+<span class="center-block">
+  <a class="btn btn-success" href="/meows/new_post">Create Purrr</a>
+</span>
 
+<div class="col-mid-10 col-md-offset-1">
+  <div class="row">
 {% if latest_posts %}
     {% for user_post in latest_posts %}
+    <div class="col-sm-12 col-md-6">
       <h3>post created by: </h3>
       <p>
         created at: {{user_post.time_created}} <br/>
         last edited: {{user_post.time_edited}} <br/>
         score: {{user_post.score}}
       </p>
+      <img src="../static/{{user_post.image_URL}}"/>
       <h2>"{{user_post.text_content}}"</h2>
+    </div>
     {% endfor %}
 {% else %}
     <p>There appears to be nothing here...</p>
 {% endif %}
+  </div>
+</div>
+
+
+
+
