@@ -1,6 +1,8 @@
 
 {% include "meows/base.html" %}
 
+<link rel="stylesheet" type="text/css" href="../static/single_post.css" />
+
 <div class="container-post">
   {% if user_post.text_content %}
     <div class="post-content">
@@ -12,6 +14,9 @@
       <img src="../static/{{user_post.image_URL}}"/>
     </div>
   {% endif %}
+  <div class="post-footer">
+    <h4>last edited: {{user_post.time_edited}} | score: {{user_post.score}}</h4>
+  </div>
 </div>
 
 <p>
