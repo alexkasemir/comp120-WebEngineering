@@ -1,0 +1,13 @@
+h1, h2, h3, h4, h5 {
+  text-align: center;
+}
+
+.container {
+  border-radius: 10px;
+  width:80%;
+}
+
+.container-header {
+  background-color:orange;
+}
+
