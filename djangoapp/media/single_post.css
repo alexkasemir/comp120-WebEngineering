@@ -28,4 +28,10 @@
   padding:15px;
   margin-bottom:15px;
 }
+.post-footer {
+  background-color: white;
+  color: black;
+  padding:5px;
+  border-radius: 10px;
+}
 
