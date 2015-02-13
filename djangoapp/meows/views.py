@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from meows.models import User_Post
 from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 
 from django.http import Http404
 from django.shortcuts import render
@@ -15,7 +16,8 @@ def index(request):
     context = RequestContext(request, {
         'latest_posts': latest_posts,
     })
-    return HttpResponse(template.render(context))
+    #return HttpResponse(template.render(context))
+    return render_to_response('meows/index.html', {}, context)
 
 
 def detail(request, user_post_id):
@@ -32,5 +34,4 @@ def create_post(request):
     user_post = User_Post.create(request.POST.get('text_content'))
     user_post.image_URL = request.POST.get('img_content')
     user_post.save()
-    print(request.POST.get('text_content'))
     return render(request, 'meows/details.html', {'user_post': user_post})
