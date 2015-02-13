@@ -1,3 +1,12 @@
-p {
-  background-color: green;
+body {
+	background-color: #FFCC87 !important; 
+}
+nav {
+	background-color: #9E6417 !important;
+}
+.navbar-brand {
+	color: white !important;
+}
+.navbar-brand:hover {
+	color: #FFCC87 !important;
 }
