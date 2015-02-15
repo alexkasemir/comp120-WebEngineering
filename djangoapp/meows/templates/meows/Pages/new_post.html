@@ -3,21 +3,20 @@
 {%block page_title %}Create New Meow {%endblock %}
 
 {% block body_content %}
-  <link rel="stylesheet" type="text/css" href="../static/new_post.css" />
   <div class="container-post">
     <div class="container-header">
       <h1>Meow</h1>
       <h4>(create a post)</h4>
       <hr/>
     </div>
-    <form role="form" action="{% url 'meows:create_post' %}" method="post">
+    <form role="form" enctype='multipart/form-data' action="{% url 'meows:create_post' %}" method="post">
       {% csrf_token %}
       <div class="form-group">
         <textarea rows="4" placeholder="text content" class="form-control" name="text_content" id="text_content"></textarea>
       </div>
       <div class="form-group">
         <label for="img-upload">Upload an image:</label>
-        <input type="file" class="form-control" id="img-upload" name="img_content">
+        <input type="file" class="form-control" id="img-upload" name="image_URL">
       </div>
       <button type="submit" class="btn btn-default">Meow!</button>
     </form>

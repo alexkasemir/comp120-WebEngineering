@@ -83,7 +83,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/media/'
+STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
 
 # Media Files (User images, and Post Images)
 # Suggestion from Tyler Lubeck on Piazza

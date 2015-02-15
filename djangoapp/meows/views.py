@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from meows.models import User_Post
 from django.http import HttpResponseRedirect
+from purrer.settings import MEDIA_ROOT
 
 from django.http import Http404
 from django.shortcuts import render
@@ -29,9 +30,17 @@ def detail(request, user_post_id):
 def new_post(request):
     return render(request, 'meows/Pages/new_post.html')
 
+def handle_uploaded_file(f):
+    dest = open(MEDIA_ROOT + '/images/' + f.name, 'wb+')
+    for chunk in f.chunks():
+        dest.write(chunk)
+
 def create_post(request):
+    print(request.FILES)
+    image = request.FILES['image_URL']
     user_post = User_Post.create(request.POST.get('text_content'))
-    user_post.image_URL = request.POST.get('img_content')
+    handle_uploaded_file(image)
+    user_post.image_URL = image.name
     print(user_post)
     user_post.save()
     return render(request, 'meows/Pages/details.html', {'user_post': user_post})
