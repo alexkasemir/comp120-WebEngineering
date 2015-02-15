@@ -1,5 +1,5 @@
 body {
-	background-color: #FFCC87 !important; 
+	background-color: #FFCC87 !important;
 }
 nav {
 	background-color: #9E6417 !important;
@@ -9,4 +9,8 @@ nav {
 }
 .navbar-brand:hover {
 	color: #FFCC87 !important;
+}
+
+.index_elems {
+  text-align: center;
 }
