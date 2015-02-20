@@ -4,11 +4,10 @@
 
 {% block body_content %}
   <span class="center-block">
-    <a class="btn btn-success" href="/meows/new_post">Create Purrr</a>
+    <a class="btn btn-lg btn-default index_elems" href="/meows/new_post">Create Purrr</a>
   </span>
 
-  <div class="col-mid-10 col-md-offset-1">
-    <div class="row">
+
       {% if latest_posts %}
           {% for user_post in latest_posts %}
             <div class="container-post">
@@ -30,8 +29,7 @@
       {% else %}
           <p>There appears to be nothing here...</p>
       {% endif %}
-    </div>
-  </div>
+
 {% endblock %}
 
 
