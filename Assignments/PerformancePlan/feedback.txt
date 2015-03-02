@@ -1,0 +1,7 @@
++ I like list of potential performance issues. Finding data quickly is a big problem.
+? You are using Memcached for ...? If Twitter uses Rails doesn't mean I want to use Rails. :-)
+? What the heck is the $286 for consulting fee for? You're wasting money. You are the engineers goddamn it!
+? "4 mb per visit" --how on Earth did you figure that out?  That seems really low...
+++ LOVED your slide on Amazon S3 including putting an average Facebook use in perspective
+
+9 / 10
