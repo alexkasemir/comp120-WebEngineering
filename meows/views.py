@@ -10,7 +10,6 @@ from django.shortcuts import render
 
 from django.core.urlresolvers import reverse
 
-
 def index(request):
     posts = cache.get("latest_posts")
     if not posts:
@@ -23,14 +22,12 @@ def index(request):
     })
     return HttpResponse(template.render(context))
 
-
-
 def detail(request, user_post_id):
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
-    return render(request, 'meows/Pages/details.html', {'user_post': user_post})
+    return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post, 'count': user_post_id})
 
 def new_post(request):
     return render(request, 'meows/Pages/new_post.html')
@@ -55,4 +52,26 @@ def create_post(request):
     cache.delete("latest_posts")
     return render(request, 'meows/Pages/details.html', {'user_post': user_post})
 
+
+def post_like(request, user_post_id):
+    try:
+        user_post = User_Post.objects.get(pk=user_post_id)
+        print("Score is: ")
+        print(user_post.score)
+    except User_Post.DoesNotExist:
+        raise Http404("Post does not exist!")
+    user_post.score += 1
+    user_post.save()
+    return HttpResponse(status=201)
+
+def post_dislike(request, user_post_id):
+    try:
+        user_post = User_Post.objects.get(pk=user_post_id)
+        print("Score is: ")
+        print(user_post.score)
+    except User_Post.DoesNotExist:
+        raise Http404("Post does not exist!")
+    user_post.score -= 1
+    user_post.save()
+    return HttpResponse(status=201)
 

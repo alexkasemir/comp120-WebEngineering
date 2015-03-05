@@ -6,25 +6,9 @@
   <span class="center-block">
     <a class="btn btn-lg btn-default index_elems" href="/meows/new_post">Create Purrr</a>
   </span>
-
-
       {% if latest_posts %}
           {% for user_post in latest_posts %}
-            <div class="container-post">
-              {% if user_post.text_content %}
-                <div class="post-content">
-                  <h1>"{{user_post.text_content}}"</h1>
-                </div>
-              {% endif %}
-              {% if user_post.image_URL %}
-                <div class="post-content">
-                  <img src="../media/images/{{user_post.image_URL}}"/>
-                </div>
-              {% endif %}
-              <div class="post-footer">
-                <h4>last edited: {{user_post.time_edited}} | score: {{user_post.score}}</h4>
-              </div>
-            </div>
+            {% include "meows/Pages/details.html" %} {#with count=forloop.counter#}
           {% endfor %}
       {% else %}
           <p>There appears to be nothing here...</p>

@@ -1,3 +1,4 @@
+.DS_Store
 virenv
 media/*
 db.sqlite3

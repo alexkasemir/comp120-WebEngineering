@@ -14,3 +14,13 @@ nav {
   text-align: center !important;
   margin-bottom: 20px;
 }
+.post-footer {
+	display: inline-flex;	
+}
+.post-footer .grrButton{
+	margin-left: 10px !important;
+}
+.post-footer .purrButton{
+	margin-right: 10px !important;
+
+}
