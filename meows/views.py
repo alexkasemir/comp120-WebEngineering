@@ -37,10 +37,15 @@ def handle_uploaded_file(f):
 
 def create_post(request):
     print(request.FILES)
-    image = request.FILES['image_URL']
     user_post = User_Post.create(request.POST.get('text_content'))
-    handle_uploaded_file(image)
-    user_post.image_URL = image.name
+    if(request.FILES):
+        image = request.FILES['image_URL']
+        handle_uploaded_file(image)
+        user_post.image_URL = image.name
+    else:
+        user_post.image_URL = ''
     print(user_post)
     user_post.save()
     return render(request, 'meows/Pages/details.html', {'user_post': user_post})
+
+
