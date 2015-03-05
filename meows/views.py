@@ -50,7 +50,7 @@ def create_post(request):
     print(user_post)
     user_post.save()
     cache.delete("latest_posts")
-    return render(request, 'meows/Pages/details.html', {'user_post': user_post})
+    return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
 
 
 def post_like(request, user_post_id):
