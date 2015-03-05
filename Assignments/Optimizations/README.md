@@ -2,13 +2,17 @@
 
 ##Optimizations for Purrer##
 
+Note: Hosted on EC2 and S3 bucket not functioning quite yet
+
 ###Techniques###
 
 We implemented memcache on our web app that is hosted using amazon webservices.
-Other techniques used:
+Other techniques used(so far):
     Minification
     javascipt at the bottom of page
-
+To do:
+    HTML5 Application Cache
+    Expiry
 
 ###Tools###
 Yslow and Google Developer tools
