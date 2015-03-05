@@ -1,7 +1,9 @@
+.gitignore
 .DS_Store
 virenv
 media/*
 db.sqlite3
 *.pyc
 secrets.py
+db.sqlite3
 
