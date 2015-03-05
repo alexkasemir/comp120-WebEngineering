@@ -1,0 +1,7 @@
+.DS
+virenv
+media/*
+db.sqlite3
+*.pyc
+secrets.py
+
