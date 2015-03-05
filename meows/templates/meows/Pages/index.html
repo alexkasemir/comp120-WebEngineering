@@ -8,7 +8,7 @@
   </span>
       {% if latest_posts %}
           {% for user_post in latest_posts %}
-            {% include "meows/Pages/details.html" %} {#with count=forloop.counter#}
+            {% include "meows/Pages/details.html" %} 
           {% endfor %}
       {% else %}
           <p>There appears to be nothing here...</p>
