@@ -10,6 +10,10 @@ urlpatterns = patterns('',
     url(r'^dislike/(?P<user_post_id>\d+)/$', views.post_dislike),
 )
 
+# urlpatterns += patterns('',
+#     url('^', include('html5_appcache.urls')),
+# )
+
 urlpatterns += patterns('', (
         r'^static/(?P<path>.*)$',
         'django.views.static.serve',

@@ -38,10 +38,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'meows',
     'storages',
-    'bootstrap3'
+    'bootstrap3',
+    # 'html5_appcache',
 )
 
 MIDDLEWARE_CLASSES = (
+    # 'html5_appcache.middleware.appcache_middleware.AppCacheAssetsFromResponse',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

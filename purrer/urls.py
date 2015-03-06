@@ -13,6 +13,10 @@ urlpatterns = patterns('',
 
 )
 
+# urlpatterns += patterns('',
+#     url('^', include('html5_appcache.urls')),
+# )
+
 urlpatterns += patterns('', (
         r'^static/(?P<path>.*)$',
         'django.views.static.serve',
