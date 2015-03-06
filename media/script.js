@@ -15,6 +15,14 @@ $(document).ready(function(){
 	    }
 	    return cookieValue;
 	}
+	/* utility for setting the expiration date on a cookie given a number of 
+	   seconds to expire and a cookie*/
+	function setCookieExpData(cookie, expSecs) {
+    	var d = new Date();
+        d.setTime(d.getTime() + (exSecs * 1000));
+        var expires = "expires="+d.toUTCString();
+    	return (cookie + expires);
+	}
 
 	purr.click(function(){
 		var csrftoken = getCookie('csrftoken');
