@@ -14,11 +14,11 @@ Other techniques used(so far):
 
     Minification
     javascipt at the bottom of page
+    CDN
 
 
 To do:
     HTML5 Application Cache
-    Expiry
 
 ###Tools###
 Yslow and Google Developer tools
