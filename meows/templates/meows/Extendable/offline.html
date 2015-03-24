@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+
+
+<html>
+  <head> 
+    {% include "meows/Includable/imports.html" %}
+    <title> {%block page_title %} Purrer! {%endblock %} </title>
+  </head>
+  <body> 
+    <div id="main">
+      {% include "meows/Includable/nav.html" %}
+      {% block body_content %}
+        <h1> Content Not Found. </h1>
+      {% endblock %}
+    </div>
+  </body>
+  <footer>
+    {% include "meows/Includable/jsImport.html" %}
+  </footer>
+</html>

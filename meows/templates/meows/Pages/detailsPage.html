@@ -1,0 +1,28 @@
+{% extends "meows/Extendable/base.html" %}
+
+{%block page_title %}Welcome to Purrer! {%endblock %}
+
+{% block body_content %}
+  <div class="container-post" id= "post{{count}}" >
+    {% if user_post.text_content %}
+      <div class="post-content">
+        <h1>"{{user_post.text_content}}"</h1>
+      </div>
+    {% endif %}
+    {% if user_post.image_URL %}
+      <div class="post-content">
+        <img src="../media/images/{{user_post.image_URL}}"/>
+      </div>
+    {% endif %}
+  
+    <div class="post-info">
+      <div class="post-footer">
+          <button class='btn btn-success purrButton'>Purrrr</button>
+          <h4 class="postInfo">last edited: {{user_post.time_edited}} | Score: {{user_post.score}}</h4>
+          <button class='btn btn-danger grrButton'>Grrrrr!</button>
+      </div>
+    </div>
+
+</div>
+  
+{% endblock %}

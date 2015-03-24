@@ -1,10 +1,5 @@
-
-{% extends "meows/Extendable/base.html" %}
-
-{%block page_title %} Post Details {%endblock %}
-
 {% block body_content %}
-  <div class="container-post">
+  <div class="container-post" id= "post{{user_post.id}}" >
     {% if user_post.text_content %}
       <div class="post-content">
         <h1>"{{user_post.text_content}}"</h1>
@@ -15,10 +10,15 @@
         <img src="{{user_post.image_URL}}"/>
       </div>
     {% endif %}
-  </div>
+  
+    <div class="post-info">
+      <div class="post-footer">
+        <button class='btn btn-success purrButton pull-left' id="{{user_post.id}}">Purrrr</button>
+        <h4 class="postInfo">Last edited: {{user_post.time_edited}} | Score: {{user_post.score}}</h4>
+        <button class='btn btn-danger grrButton pull-right' id="{{user_post.id}}">Grrrrr!</button>
+      </div>
+    </div>
 
-  <p>
-      last edited: {{user_post.time_edited}} <br/>
-      score: {{user_post.score}}
-  </p>
+</div>
+  
 {% endblock %}

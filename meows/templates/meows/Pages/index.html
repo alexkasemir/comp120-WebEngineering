@@ -6,8 +6,6 @@
   <span class="center-block">
     <a class="btn btn-lg btn-default index_elems" href="/meows/new_post">Create Purrr</a>
   </span>
-
-
       {% if latest_posts %}
           {% for user_post in latest_posts %}
             <div class="container-post">
@@ -25,6 +23,7 @@
                 <h4>last edited: {{user_post.time_edited}} | score: {{user_post.score}}</h4>
               </div>
             </div>
+            {% include "meows/Pages/details.html" %}
           {% endfor %}
       {% else %}
           <p>There appears to be nothing here...</p>

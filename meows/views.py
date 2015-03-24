@@ -3,29 +3,29 @@ from django.template import RequestContext, loader
 from meows.models import User_Post, UserPostForm
 from django.http import HttpResponseRedirect
 from purrer.settings import MEDIA_URL
-
 from django.http import Http404
 from django.shortcuts import render
 
 from django.core.urlresolvers import reverse
 
-
 def index(request):
-    latest_posts = User_Post.objects.order_by('-time_created')[:10]
+    posts = cache.get("latest_posts")
+    if not posts:
+        posts = User_Post.objects.order_by('-time_created')[:10]
+        cache.set("latest_posts", posts)
+    # latest_posts = User_Post.objects.order_by('-time_created')[:10]
     template = loader.get_template('meows/Pages/index.html')
     context = RequestContext(request, {
-        'latest_posts': latest_posts,
+        'latest_posts': posts,
     })
     return HttpResponse(template.render(context))
-
-
 
 def detail(request, user_post_id):
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
-    return render(request, 'meows/Pages/details.html', {'user_post': user_post})
+    return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post, 'count': user_post_id})
 
 def new_post(request):
     form = UserPostForm()
