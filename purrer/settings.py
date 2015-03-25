@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'meows',
     'storages',
-    'bootstrap3'
+    'bootstrap3',
+    'rest_framework'
 )
 
 MIDDLEWARE_CLASSES = (

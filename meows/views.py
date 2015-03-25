@@ -10,6 +10,10 @@ from django.shortcuts import render
 
 from django.core.urlresolvers import reverse
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from meows.serializers import PostSerializer
+
 def index(request):
     posts = cache.get("latest_posts")
     if not posts:
@@ -72,4 +76,28 @@ def post_dislike(request, user_post_id):
     user_post.save()
     cache.delete("latest_posts")
     return HttpResponse(status=201)
+
+#API Functionality
+@api_view(['GET', 'POST'])
+def api_post_collection(request):
+    if request.method == 'GET':
+        posts = User_Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        data = {'image_URL': request.FILES['image_URL'], 'text_content': request.POST.get('text_content'), 'score': 0, }
+
+        data = {'text': request.DATA.get('the_post'), 'author': request.user.pk}
+        fields = ('image_URL', 'text_content', 'score', 'time_created', 'time_edited')
+
+@api_view(['GET'])
+def api_post_element(request, user_post_id):
+    try:
+        post = User_Post.objects.get(pk=user_post_id)
+    except User_Post.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
 
