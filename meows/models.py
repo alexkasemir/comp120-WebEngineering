@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 class User(models.Model):
     username = models.CharField(max_length = 25, unique= True)
@@ -12,7 +13,7 @@ class User(models.Model):
 
 class User_Post(models.Model):
     contains_image = models.BooleanField(default = False)
-    image_URL = models.ImageField()
+    image_URL = models.ImageField(null=True)
     text_content = models.TextField(max_length = 255)
     score = models.IntegerField(default = 0)
     time_created = models.DateTimeField(auto_now_add = True)
@@ -23,6 +24,11 @@ class User_Post(models.Model):
     def create(text_cont):
         user_post = User_Post(text_content=text_cont)
         return user_post
+
+class UserPostForm(forms.ModelForm):
+    class Meta:
+        model = User_Post
+        fields = ["image_URL", "text_content"]
 
 class Friends(models.Model):
     from_user = models.ForeignKey(User, related_name = 'from_user')

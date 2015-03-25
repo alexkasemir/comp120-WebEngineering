@@ -1,10 +1,8 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from meows.models import User_Post
+from meows.models import User_Post, UserPostForm
 from django.http import HttpResponseRedirect
-from purrer.settings import MEDIA_ROOT
-from django.core.cache import cache
-
+from purrer.settings import MEDIA_URL
 from django.http import Http404
 from django.shortcuts import render
 
@@ -34,21 +32,23 @@ def detail(request, user_post_id):
     return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post, 'count': user_post_id})
 
 def new_post(request):
-    return render(request, 'meows/Pages/new_post.html')
+    form = UserPostForm()
+    return render(request, 'meows/Pages/new_post.html', {'form': form})
 
-def handle_uploaded_file(f):
-    dest = open(MEDIA_ROOT + '/images/' + f.name, 'wb+')
-    for chunk in f.chunks():
-        dest.write(chunk)
-    dest.close()
+# def handle_uploaded_file(f):
+#     dest = open(MEDIA_ROOT + '/images/' + f.name, 'wb+')
+#     for chunk in f.chunks():
+#         dest.write(chunk)
 
 def create_post(request):
-    print(request.FILES)
-    user_post = User_Post.create(request.POST.get('text_content'))
-    if(request.FILES):
-        image = request.FILES['image_URL']
-        handle_uploaded_file(image)
-        user_post.image_URL = image.name
+    # filename = '%s%s' % (MEDIA_URL, request.FILES['image_URL'].name)
+    # print(filename)
+    # post = User_Post(image_URL=filename)
+    form = UserPostForm(request.POST, request.FILES)
+    print(form)
+    if form.is_valid():
+        user_post = form.save()
+        return render(request, 'meows/Pages/details.html', {'user_post': user_post})
     else:
         user_post.image_URL = ''
     print(user_post)

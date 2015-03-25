@@ -12,6 +12,10 @@ urlpatterns = patterns('',
     url(r'^api/posts', views.api_post_collection),
 )
 
+# urlpatterns += patterns('',
+#     url('^', include('html5_appcache.urls')),
+# )
+
 urlpatterns += patterns('', (
         r'^static/(?P<path>.*)$',
         'django.views.static.serve',
