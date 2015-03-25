@@ -1,0 +1,19 @@
+Do not submit this, just my notes on how to use the API:
+
+Posts:
+To get all posts use: 
+curl http://127.0.0.1:8000/meows/api/posts
+
+To get a single post use where XX is a number of post (don't forget the trailing slash): 
+curl http://127.0.0.1:8000/meows/api/posts/XX/
+
+To create a post use: 
+curl -X POST -d @test.txt http://127.0.0.1:8000/meows/api/posts --header "Content-Type:application/json"
+where "test.txt" contains a json object to be posted
+
+Users:
+To get all users: 
+curl http://127.0.0.1:8000/meows/api/users
+
+To create a user: 
+curl -X POST -d @user.txt http://127.0.0.1:8000/meows/api/users --header "Content-Type:application/json"

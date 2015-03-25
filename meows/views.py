@@ -1,8 +1,12 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from meows.models import User_Post, UserPostForm
+from meows.models import User_Post
+from meows.models import User
+
 from django.http import HttpResponseRedirect
-from purrer.settings import MEDIA_URL
+from purrer.settings import MEDIA_ROOT
+from django.core.cache import cache
+
 from django.http import Http404
 from django.shortcuts import render
 
@@ -10,7 +14,11 @@ from django.core.urlresolvers import reverse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from meows.serializers import PostSerializer
+from meows.serializers import UserSerializer
+
+from django.core.cache import cache
 
 def index(request):
     posts = cache.get("latest_posts")
@@ -32,23 +40,21 @@ def detail(request, user_post_id):
     return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post, 'count': user_post_id})
 
 def new_post(request):
-    form = UserPostForm()
-    return render(request, 'meows/Pages/new_post.html', {'form': form})
+    return render(request, 'meows/Pages/new_post.html')
 
-# def handle_uploaded_file(f):
-#     dest = open(MEDIA_ROOT + '/images/' + f.name, 'wb+')
-#     for chunk in f.chunks():
-#         dest.write(chunk)
+def handle_uploaded_file(f):
+    dest = open(MEDIA_ROOT + '/images/' + f.name, 'wb+')
+    for chunk in f.chunks():
+        dest.write(chunk)
+    dest.close()
 
 def create_post(request):
-    # filename = '%s%s' % (MEDIA_URL, request.FILES['image_URL'].name)
-    # print(filename)
-    # post = User_Post(image_URL=filename)
-    form = UserPostForm(request.POST, request.FILES)
-    print(form)
-    if form.is_valid():
-        user_post = form.save()
-        return render(request, 'meows/Pages/details.html', {'user_post': user_post})
+    print(request.FILES)
+    user_post = User_Post.create(request.POST.get('text_content'))
+    if(request.FILES):
+        image = request.FILES['image_URL']
+        handle_uploaded_file(image)
+        user_post.image_URL = image.name
     else:
         user_post.image_URL = ''
     print(user_post)
@@ -85,10 +91,13 @@ def api_post_collection(request):
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        data = {'image_URL': request.FILES['image_URL'], 'text_content': request.POST.get('text_content'), 'score': 0, }
-
-        data = {'text': request.DATA.get('the_post'), 'author': request.user.pk}
-        fields = ('image_URL', 'text_content', 'score', 'time_created', 'time_edited')
+        user_post = {"text_content": request.DATA.get('text_content'), "score": '0', }
+        serializer = PostSerializer(data=user_post)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 @api_view(['GET'])
 def api_post_element(request, user_post_id):
@@ -101,3 +110,17 @@ def api_post_element(request, user_post_id):
         serializer = PostSerializer(post)
         return Response(serializer.data)
 
+@api_view(['GET', 'POST'])
+def api_user_collection(request):
+    if request.method == 'GET':
+        posts = User.objects.all()
+        serializer = UserSerializer(posts, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        user_info = {"username": request.DATA.get('username'), "owner_email": request.DATA.get('owner_email'), "password": request.DATA.get('password')}
+        serializer = UserSerializer(data=user_info)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        

@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^dislike/(?P<user_post_id>\d+)/$', views.post_dislike),
     url(r'^api/posts/(?P<user_post_id>\d+)/$', views.api_post_element),
     url(r'^api/posts', views.api_post_collection),
+    url(r'^api/users', views.api_user_collection),
 )
 
 # urlpatterns += patterns('',
