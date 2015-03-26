@@ -49,24 +49,24 @@ There are a few different API features. The USERPOST feature, and the USER featu
             curl http://127.0.0.1:8000/meows/api/users
 </p>
 
-The USERPOST API:
+<h3>The USERPOST API</h3>
 
-    WHAT IS IT?
-    This API accept is a POST or a GET API. At the moment, a userpost can be created
+    <h4>WHAT IS IT?</h4>
+    <p>This API accept is a POST or a GET API. At the moment, a userpost can be created
     by anyone. If posting a userpost, the developer would simply create the userpost and send
     it through the API. The option to Get userposts is also available. Someone could send a get request
     and they will be given all of the userposts that have been written ever. A future addition
     to this API will be allowing someone to get all of the userposts of a given user. This has not
-    been created yet.
+    been created yet.</p>
 
-    WHY WOULD YOU USE IT?
-    Developers would use this userpost api if they wanted to have some service where
+    <h4>WHY WOULD YOU USE IT?</h4>
+    <p>Developers would use this userpost api if they wanted to have some service where
     they could automatically post userposts to Purrer. Companies like to do this for
     promotional reasons. This Api could make these automatic userposts easier than simply going
     onto the Purrer website everytime a promotion is wanted
-
-    HOW?
-
+	</p>
+    <h4>HOW?</h4>
+<p>
     Creating a userpost(POST):
         ******LINK TO THIS*****
         http://localhost:8000/meows/api/posts/
@@ -96,7 +96,10 @@ The USERPOST API:
 
         or curl could be used as follows:
             curl http://127.0.0.1:8000/meows/api/posts
-
+</p>
+<br/>
+<hr>
+<br/>
 <h3>Authentication</h3>
 <p>
 	User posts in our web app are bound to specific users. So, in order to create a post, a user must be authentic to our collection of users (i.e. they must have a valid username and password). To edit a post, a user must be authenticated as the user who created the post. However, anyone may view any post, so authentication is not required to retrieve the contents of a post. To sum, POSTs related to user posts need to be authenticated but GETs for posts do not. The one unique scenario is deleting posts - authentication is of course required for this task, but in addition to the creator of the post, someone with an admin account is able to delete posts. This allows for the removal of posts inconsistant with the site's code of conduct or similar reasons.
