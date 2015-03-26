@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^api/posts/(?P<user_post_id>\d+)$', views.api_post_element),
     url(r'^api/posts', views.api_post_collection),
     url(r'^api/users', views.api_user_collection),
+    url(r'^api/docs', views.api_docs),
 )
 
 # urlpatterns += patterns('',

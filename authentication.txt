@@ -1,0 +1,21 @@
+AUTHENTICATION
+______________
+
+User posts in our web app are bound to specific users. So, in order
+to create a post, a user must be authentic to our collection of users
+(i.e. they must have a valid username and password). To edit a post, 
+a user must be authenticated as the user who created the post. However, 
+anyone may view any post, so authentication is not required to retrieve
+the contents of a post. To sum, POSTs related to user posts need to be 
+authenticated but GETs for posts do not. The one unique scenario is
+deleting posts - authentication is of course required for this task,
+but in addition to the creator of the post, someone with an admin 
+account is able to delete posts. This allows for the removal of posts
+inconsistant with the site's code of conduct or similar reasons.
+
+The act of creating a user does not require authentication. However, 
+retreiving some information about a user does require it; whether the
+user is active, user email, and user password (hashed of course!) all 
+require authentiaton. Username, icon url, and member since are freely
+available. An authenticated admin also has the ability to view a dump
+of all users and their information. 
