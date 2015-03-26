@@ -1,1 +1,101 @@
-Hey dringus.
+<html>
+<body>
+<h1>Overview</h1> 
+	<p>
+		The Purrer API is a wonderful interface that allows developers to utilize the Purrer website in meaningful ways. This API allows for developers to create posts and create users. It utilizes the Django REST framework. Developers have the option to see all the posts that have been created and they also have the option to see all of the users that have been created. Obviously in later versions of this API, these options will require authentication because we do not want everyone to have access to this information. 
+
+		The API allows for easy posting and user creation through the API. The step-by-step guide goes into further depth about what headers are required and how to utilize each aspect of the API.
+	</p>
+<h1>Getting Started</h1>
+<p>
+There are a few different API features. The USERPOST feature, and the USER feature.
+</p>
+<h3>The USER API:</h3>
+    <h4>WHAT IS IT? </h4>
+    <p>This API allows for user creation through a POST request, or user lookup (or dump of all users) using a GET request. A user can be created by sending all information necessary to create a user (username, email, and password) in json form, and a single user can be looked up by calling the user lookup GET request while passing in a user id. 
+	</p>
+    <h4>WHY WOULD YOU USE IT?</h4>
+    <p>This API is mainly meant for admins or the owners of the site to look at information like when user accounts were created. They could also be used by someone looking to display more information about users given a collection of user ids, such as someone looking to sohw the user icons of every user who is following a particular user.
+    </p>
+    <h4>HOW?</h4>
+<p>
+	Creating a user(POST):
+        
+        <a href="/meows/api/user/">http://localhost:8000/meows/api/user/</a>
+
+        This could be done from the django-rest-framework by inputing a json object
+        that looks like this:
+            {"username":"UNIQUE_NAME","owner_email":"email@UNIQUE.com","password":"iamapasswordama"}
+        This could also be done in testing by using the curl function call:
+        curl -X POST -d @test.txt http://127.0.0.1:8000/meows/api/users --header "Content-Type:application/json"
+        where "test.txt" contains a json object to be posted like the one above
+
+    Viewing a single user (GET):
+        A single user can be retrieved from this url (in json format):
+            http://localhost:8000/meows/api/users/putusernamehere?format=json
+
+        Or it can be retrieved using curl:
+            curl http://127.0.0.1:8000/meows/api/users/XX
+            where XX is the pk of the user (i.e. username) that is to be retrieved.
+
+    Viewing all users (GET):
+        Going to this link will give you a json of all of the posts that have been 
+        created.
+        ****
+        http://localhost:8000/meows/api/users/?format=json
+        ****
+
+        or curl could be used as follows:
+            curl http://127.0.0.1:8000/meows/api/users
+</p>
+
+The USERPOST API:
+
+    WHAT IS IT?
+    This API accept is a POST or a GET API. At the moment, a userpost can be created
+    by anyone. If posting a userpost, the developer would simply create the userpost and send
+    it through the API. The option to Get userposts is also available. Someone could send a get request
+    and they will be given all of the userposts that have been written ever. A future addition
+    to this API will be allowing someone to get all of the userposts of a given user. This has not
+    been created yet.
+
+    WHY WOULD YOU USE IT?
+    Developers would use this userpost api if they wanted to have some service where
+    they could automatically post userposts to Purrer. Companies like to do this for
+    promotional reasons. This Api could make these automatic userposts easier than simply going
+    onto the Purrer website everytime a promotion is wanted
+
+    HOW?
+
+    Creating a userpost(POST):
+        ******LINK TO THIS*****
+        http://localhost:8000/meows/api/posts/
+
+        This could be done from the django-rest-framework by inputing a json object
+        that looks like this:
+            {"text_content": "Curl test"}
+        This could also be done in testing by using the curl function call:
+        curl -X POST -d @test.txt http://127.0.0.1:8000/meows/api/posts --header "Content-Type:application/json"
+        where "test.txt" contains a json object to be posted like the one above
+
+    Viewing a single Post(GET):
+        A single userpost can be retrieved from this url (in json format):
+            http://localhost:8000/meows/api/posts/5?format=json
+
+        Or it can be retrieved using curl:
+            curl http://127.0.0.1:8000/meows/api/posts/XX
+            where XX is the pk of the userpost that is to be retrieved.
+
+
+    Viewing all userposts(GET):
+        Going to this link will give you a json of all of the posts that have been 
+        created.
+        ****
+        http://localhost:8000/meows/api/posts/?format=json
+        ****
+
+        or curl could be used as follows:
+            curl http://127.0.0.1:8000/meows/api/posts
+
+</body>
+</html>
