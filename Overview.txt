@@ -1,0 +1,74 @@
+
+____________
+|Overview: |
+|__________|
+The Purrer API is a wonderful interface that allows developers to utilize the 
+Purrer website in meaningful ways. This API allows for developers to create posts
+and create users. It utilizes the Django REST framework. Developers have the option
+to see all the posts that have been created and they also have the option to see all 
+of the users that have been created. Obviously in later versions of this API, these
+options will require authentication because we do not want everyone to have access to 
+this information. 
+
+The API allows for easy posting and user creation through the API. The step-by-step
+guide goes into further depth about what headers are required and how to utilize 
+each aspect of the API.
+ ___________________
+| GETTING STARTED:  |
+|___________________|
+
+There are a few different API features. The POST feature, and the USER feature.
+
+The POST API:
+
+    WHAT IS IT?
+    This API accept is a POST or a GET API. At the moment, a post can be created
+    by any one. If posting a Post, the developer would simply create the post and send
+    it through the API. The option to Get posts is also available. Someone could send a get request
+    and they will be given all of the posts that have been written ever. A future addition
+    to this API will be allowing someone to get all of the posts of a given user. This has not
+    been created yet.
+
+    WHY WOULD YOU USE IT?
+    Developers would use this Post api if they wanted to have some service where
+    they could automatically post posts to Purrer. Companies like to do this for
+    promotional reasons. This Api could make these automatic posts easier than simply going
+    onto the Purrer website everytime a promotion is wanted
+
+    HOW?
+
+    Creating a post(POST):
+        ******LINK TO THIS*****
+        http://localhost:8000/meows/api/posts/
+
+        This could be done from the django-rest-framework by inputing a json object
+        that looks like this:
+            {"text_content": "Curl test"}
+        This could also be done in testing by using the curl function call:
+        curl -X POST -d @test.txt http://127.0.0.1:8000/meows/api/posts --header "Content-Type:application/json"
+        where "test.txt" contains a json object to be posted like the one above
+
+    Viewing a single Post(GET):
+        A single post can be retrieved from this url (in json format):
+            http://localhost:8000/meows/api/posts/5?format=json
+
+        Or it can be retrieved using curl:
+            curl http://127.0.0.1:8000/meows/api/posts/XX
+            where XX is the pk of the post that is to be retrieved.
+
+
+    Viewing all posts(GET):
+        Going to this link will give you a json of all of the posts that have been 
+        created.
+        ****
+        http://localhost:8000/meows/api/posts/?format=json
+        ****
+
+        or curl could be used as follows:
+            curl http://127.0.0.1:8000/meows/api/posts
+
+
+
+
+
+

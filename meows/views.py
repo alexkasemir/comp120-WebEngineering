@@ -89,8 +89,8 @@ def api_post_collection(request):
     if request.method == 'GET':
         posts = User_Post.objects.all()
         serializer = PostSerializer(posts, many=True)
-    elif request.method == 'POST':
         return Response(serializer.data)
+    elif request.method == 'POST':
         user_post = {"text_content": request.DATA.get('text_content'), "score": '0', }
         serializer = PostSerializer(data=user_post)
         if serializer.is_valid():
@@ -113,8 +113,8 @@ def api_post_element(request, user_post_id):
 @api_view(['GET', 'POST'])
 def api_user_collection(request):
     if request.method == 'GET':
-        posts = User.objects.all()
-        serializer = UserSerializer(posts, many=True)
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
         user_info = {"username": request.DATA.get('username'), "owner_email": request.DATA.get('owner_email'), "password": request.DATA.get('password')}
@@ -124,6 +124,21 @@ def api_user_collection(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def api_user_element(request, user_id):
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+        
+
 def api_docs(request):
-    template = loader.get_template('meows/Pages/apidocs.html')
-    return HttpResponse(template.render())
+    return render(request, 'meows/Pages/apidocs.html')
+
