@@ -89,8 +89,8 @@ def api_post_collection(request):
     if request.method == 'GET':
         posts = User_Post.objects.all()
         serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
     elif request.method == 'POST':
+        return Response(serializer.data)
         user_post = {"text_content": request.DATA.get('text_content'), "score": '0', }
         serializer = PostSerializer(data=user_post)
         if serializer.is_valid():
@@ -124,6 +124,7 @@ def api_user_collection(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def api_user_element(request, user_id):
     try:
@@ -137,3 +138,8 @@ def api_user_element(request, user_id):
 
 
         
+
+def api_docs(request):
+    template = loader.get_template('meows/Pages/apidocs.html')
+    return HttpResponse(template.render())
+

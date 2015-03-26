@@ -12,7 +12,11 @@ urlpatterns = patterns('',
     url(r'^api/users/(?P<user_id>\d+)$', views.api_user_element),
     url(r'^api/posts', views.api_post_collection),
     url(r'^api/users', views.api_user_collection),
+<<<<<<< HEAD
     
+=======
+    url(r'^api/docs', views.api_docs),
+>>>>>>> 8803ecaef4d8b008ddc8de4553fd3407cc52ceec
 )
 
 # urlpatterns += patterns('',
