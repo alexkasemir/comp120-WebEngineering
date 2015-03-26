@@ -117,7 +117,7 @@ def api_user_collection(request):
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        user_info = {"username": request.DATA.get('username'), "owner_email": request.DATA.get('owner_email'), "password": request.DATA.get('password')}
+        user_info = {"username": request.DATA.get('username'), "owner_email": request.DATA.get('owner_email')}
         serializer = UserSerializer(data=user_info)
         if serializer.is_valid():
             serializer.save()
