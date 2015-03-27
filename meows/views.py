@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from meows.models import User_Post
-from meows.models import User
+from meows.models import User, User_Post, UserPostForm
 
 from django.http import HttpResponseRedirect
 from purrer.settings import MEDIA_ROOT
@@ -40,27 +39,35 @@ def detail(request, user_post_id):
     return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post, 'count': user_post_id})
 
 def new_post(request):
-    return render(request, 'meows/Pages/new_post.html')
+    form = UserPostForm()
+    return render(request, 'meows/Pages/new_post.html', {'form': form})
 
-def handle_uploaded_file(f):
-    dest = open(MEDIA_ROOT + '/images/' + f.name, 'wb+')
-    for chunk in f.chunks():
-        dest.write(chunk)
-    dest.close()
+# def handle_uploaded_file(f):
+#     dest = open(MEDIA_ROOT + '/images/' + f.name, 'wb+')
+#     for chunk in f.chunks():
+#         dest.write(chunk)
+#     dest.close()
 
 def create_post(request):
-    print(request.FILES)
-    user_post = User_Post.create(request.POST.get('text_content'))
-    if(request.FILES):
-        image = request.FILES['image_URL']
-        handle_uploaded_file(image)
-        user_post.image_URL = image.name
+    # print(request.FILES)
+    # user_post = User_Post.create(request.POST.get('text_content'))
+    # if(request.FILES):
+    #     image = request.FILES['image_URL']
+    #     handle_uploaded_file(image)
+    #     user_post.image_URL = image.name
+    # else:
+    #     user_post.image_URL = ''
+    # print(user_post)
+    # user_post.save()
+    # cache.delete("latest_posts")
+    # return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
+    form = UserPostForm(request.POST, request.FILES)
+    print(form)
+    if form.is_valid():
+        user_post = form.save()
+        return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
     else:
-        user_post.image_URL = ''
-    print(user_post)
-    user_post.save()
-    cache.delete("latest_posts")
-    return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
+        return render(request, 'meows/Pages/new_post.html', {'form': form})
 
 
 def post_like(request, user_post_id):
