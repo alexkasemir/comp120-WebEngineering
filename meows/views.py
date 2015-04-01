@@ -71,6 +71,7 @@ def create_post(request):
         print(user_post.time_edited)
         user_post.save()
         print(user_post.time_edited)
+        cache.delete("latest_posts")
         form.save_m2m()
         return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
     else:
