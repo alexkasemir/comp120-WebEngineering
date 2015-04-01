@@ -9,4 +9,4 @@ class PostSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
-		fields = ('username', 'owner_email', 'password', 'active', 'member_since')
+		fields = ('username', 'owner_email', 'active', 'member_since')
