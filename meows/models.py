@@ -13,7 +13,7 @@ class User(models.Model):
 
 class User_Post(models.Model):
     contains_image = models.BooleanField(default = False)
-    image_URL = models.ImageField(null=True)
+    image_URL = models.ImageField(blank = True, null=True)
     text_content = models.TextField(max_length = 255)
     score = models.IntegerField(default = 0)
     time_created = models.DateTimeField(auto_now_add = True)
@@ -28,6 +28,7 @@ class User_Post(models.Model):
 class UserPostForm(forms.ModelForm):
     class Meta:
         model = User_Post
+
         fields = ["image_URL", "text_content"]
 
 class Friends(models.Model):

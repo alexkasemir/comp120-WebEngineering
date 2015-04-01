@@ -22,7 +22,7 @@ from django.core.cache import cache
 def index(request):
     posts = cache.get("latest_posts")
     if not posts:
-        posts = User_Post.objects.order_by('-time_created')[:10]
+        posts = User_Post.objects.order_by('-time_created')[:20]
         cache.set("latest_posts", posts)
     # latest_posts = User_Post.objects.order_by('-time_created')[:10]
     template = loader.get_template('meows/Pages/index.html')
@@ -61,10 +61,17 @@ def create_post(request):
     # user_post.save()
     # cache.delete("latest_posts")
     # return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
+
+
+    #post = User_Post()
     form = UserPostForm(request.POST, request.FILES)
     print(form)
-    if form.is_valid():
-        user_post = form.save()
+    if form.is_valid(): 
+        user_post = form.save(commit=False)
+        print(user_post.time_edited)
+        user_post.save()
+        print(user_post.time_edited)
+        form.save_m2m()
         return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
     else:
         return render(request, 'meows/Pages/new_post.html', {'form': form})
