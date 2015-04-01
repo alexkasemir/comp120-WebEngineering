@@ -71,16 +71,19 @@ def create_post(request):
 
 
 def post_like(request, user_post_id):
+   # print "LIKE!!!!!\n\n\n\n\n\n"
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
+    cache.delete("latest_posts")
     user_post.score += 1
     user_post.save()
-    cache.delete("latest_posts")
+
     return HttpResponse(status=201)
 
 def post_dislike(request, user_post_id):
+   # print "DISLIKE!!!!!\n\n\n\n\n\n"
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
