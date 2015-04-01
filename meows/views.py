@@ -3,7 +3,7 @@ from django.template import RequestContext, loader
 from meows.models import User, User_Post, UserPostForm
 
 from django.http import HttpResponseRedirect
-from purrer.settings import MEDIA_ROOT
+#from purrer.settings import MEDIA_ROOT
 from django.core.cache import cache
 
 from django.http import Http404
@@ -78,16 +78,19 @@ def create_post(request):
 
 
 def post_like(request, user_post_id):
+   # print "LIKE!!!!!\n\n\n\n\n\n"
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
+    cache.delete("latest_posts")
     user_post.score += 1
     user_post.save()
-    cache.delete("latest_posts")
+
     return HttpResponse(status=201)
 
 def post_dislike(request, user_post_id):
+   # print "DISLIKE!!!!!\n\n\n\n\n\n"
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
