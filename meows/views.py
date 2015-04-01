@@ -3,7 +3,7 @@ from django.template import RequestContext, loader
 from meows.models import User, User_Post, UserPostForm
 
 from django.http import HttpResponseRedirect
-from purrer.settings import MEDIA_ROOT
+#from purrer.settings import MEDIA_ROOT
 from django.core.cache import cache
 
 from django.http import Http404
