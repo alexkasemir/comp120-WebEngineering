@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
         return account
 
 class User(AbstractBaseUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(default="", unique=True)
     username = models.CharField(max_length=40, unique=True)
 
     first_name = models.CharField(max_length=40, blank=True)
@@ -53,7 +53,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQURIED_FIELDS = ['username',]
+    REQURIED_FIELDS = ['username']
 
     def _unicode_(self):
         return self.email
