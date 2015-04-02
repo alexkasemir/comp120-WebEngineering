@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'purrer.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^meows/', include('meows.urls', namespace="meows")),
+    url(r'', include('meows.urls', namespace="meows")),
 
     url(r'^admin/', include(admin.site.urls)),
 

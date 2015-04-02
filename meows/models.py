@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
         return account
 
 class User(AbstractBaseUser):
-    email = models.EmailField(default="", unique=True)
+    email = models.EmailField(default='', unique=True)
     username = models.CharField(max_length=40, unique=True)
 
     first_name = models.CharField(max_length=40, blank=True)
@@ -48,7 +48,6 @@ class User(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
 
     member_since = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
 
