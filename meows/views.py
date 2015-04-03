@@ -21,18 +21,15 @@ from meows.serializers import UserSerializer
 from django.core.cache import cache
 
 def index(request):
-    for i in range(30):
-        posts = cache.get("latest_posts")
-        if not posts: #new post has been created
-            posts = User_Post.objects.order_by('-time_created')[:20]
-            cache.set("latest_posts", posts)
-            return render(request, 'meows/Pages/index.html', {'latest_posts': posts} )
-        time.sleep(1)
+    posts = cache.get("latest_posts")
+    if not posts: #new post has been created
+        posts = User_Post.objects.order_by('-time_created')[:20]
+        cache.set("latest_posts", posts)
         # template = loader.get_template('meows/Pages/index.html')
         # context = RequestContext(request, {
         #     'latest_posts': posts,
         # })
-    render(request, 'meows/Pages/index.html', {'latest_posts': posts} )
+    return render(request, 'meows/Pages/index.html', {'latest_posts': posts} )
 
 def detail(request, user_post_id):
     try:

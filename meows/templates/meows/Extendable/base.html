@@ -16,25 +16,7 @@
     <div class="base_footer">
       <h3><a href="/api/docs">API docs</a></h3> 
     </div>
-    <script>
-    current_post = 
-window.setInterval(function() {
-    $.ajax({
-        url: '/api/posts/',
-        data: {
-            format: 'json'
-        },
-        success: function(data){
-            console.log(data);
-            
-            //get the posts
-            //check to see if its a new post by id
-            //make a button appear if its true /update it
-            //prepend the new posts onto post div if the button is pressed
-        }
-    });
-}, 5000);
-</script>
+
   </body>
   <footer>
     {% include "meows/Includable/jsImport.html" %}
