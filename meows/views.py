@@ -105,7 +105,7 @@ def post_dislike(request, user_post_id):
 @api_view(['GET', 'POST'])
 def api_post_collection(request):
     if request.method == 'GET':
-        posts = User_Post.objects.all()
+        posts = User_Post.objects.order_by('-time_created')[:20]
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':

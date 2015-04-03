@@ -6,6 +6,10 @@
   <span class="center-block">
     <a class="btn btn-lg btn-default index_elems" href="/new_post">Create Purrr</a>
   </span>
+  <div class="Add_Post_Button_Container center-block" >
+    <button class="Add_Post_Button btn btn-lg btn-default">MORE MEOWWWSSSS</button>
+  </div>
+    <div id="latest_posts">
       {% if latest_posts %}
           {% for user_post in latest_posts %}
             {% include "meows/Pages/details.html" %}
@@ -13,7 +17,7 @@
       {% else %}
           <p>There appears to be nothing here...</p>
       {% endif %}
-
+    </div>
 {% endblock %}
 
 
