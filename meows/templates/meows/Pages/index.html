@@ -14,7 +14,28 @@
           <p>There appears to be nothing here...</p>
       {% endif %}
 
+          <script>
+    current_post = 
+window.setInterval(function() {
+    $.ajax({
+        url: '/api/posts/',
+        data: {
+            format: 'json'
+        },
+        success: function(data){
+            console.log(data);
+            
+            //get the posts
+            //check to see if its a new post by id
+            //make a button appear if its true /update it
+            //prepend the new posts onto post div if the button is pressed
+        }
+    });
+}, 5000);
+</script>
+
 {% endblock %}
+
 
 
 

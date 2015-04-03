@@ -27,24 +27,24 @@ There are a few different API features. The USERPOST feature, and the USER featu
         that looks like this:
             <code>{"username":"UNIQUE_NAME","owner_email":"email@UNIQUE.com"} </code>
         This could also be done in testing by using the curl function call:
-        <code>curl -X POST -d @test.txt https://banana-cake-3532.herokuapp.com/meows/api/users --header "Content-Type:application/json" </code>
+        <code>curl -X POST -d @test.txt http://blueberry-cake-2991.herokuapp.com/api/users --header "Content-Type:application/json" </code>
         where "test.txt" contains a json object to be posted like the one above
 </p>
 <p>
     Viewing a single user (GET):
         A single user can be retrieved from this url (in json format):
-            https://banana-cake-3532.herokuapp.com/meows/api/users/putusernamehere?format=json
+            http://blueberry-cake-2991.herokuapp.com/api/users/putusernamehere?format=json
 
         Or it can be retrieved using curl:
-            <code>curl https://banana-cake-3532.herokuapp.com/meows/api/users/XX</code>
+            <code>curl http://blueberry-cake-2991.herokuapp.com//api/users/XX</code>
             where XX is the pk of the user (i.e. username) that is to be retrieved.
 </p>
     Viewing all users (GET):
         Going to this link will give you a json of all of the posts that have been 
         created.
-        <a href="/meows/api/users/?format=json">https://banana-cake-3532.herokuapp.com/meows/api/users/?format=json</a>
+        <a href="/meows/api/users/?format=json">http://blueberry-cake-2991.herokuapp.com/api/users/?format=json</a>
         or curl could be used as follows:
-            <code>curl https://banana-cake-3532.herokuapp.com/meows/api/users</code>
+            <code>curl http://blueberry-cake-2991.herokuapp.com/api/users</code>
 </p>
 
 <h3>The USERPOST API</h3>
@@ -72,16 +72,16 @@ There are a few different API features. The USERPOST feature, and the USER featu
         that looks like this:
             {"text_content": "Curl test"}
         This could also be done in testing by using the curl function call:
-        curl -X POST -d @test.txt https://banana-cake-3532.herokuapp.com/meows/api/posts --header "Content-Type:application/json"
+        curl -X POST -d @test.txt http://blueberry-cake-2991.herokuapp.com/api/posts --header "Content-Type:application/json"
         where "test.txt" contains a json object to be posted like the one above
 </p>
 <p>
     Viewing a single Post(GET):
         A single userpost can be retrieved from this url (in json format):
-            https://banana-cake-3532.herokuapp.com/meows/api/posts/5?format=json
+            http://blueberry-cake-2991.herokuapp.com/api/posts/5?format=json
 
         Or it can be retrieved using curl:
-            curl https://banana-cake-3532.herokuapp.com/meows/api/posts/XX
+            curl http://blueberry-cake-2991.herokuapp.com/api/posts/XX
             where XX is the pk of the userpost that is to be retrieved.
 
 </p>
@@ -90,11 +90,11 @@ There are a few different API features. The USERPOST feature, and the USER featu
         Going to this link will give you a json of all of the posts that have been 
         created.
         ****
-        https://banana-cake-3532.herokuapp.com/meows/api/posts/?format=json
+        http://blueberry-cake-2991.herokuapp.com/api/posts/?format=json
         ****
 
         or curl could be used as follows:
-            curl https://banana-cake-3532.herokuapp.com/meows/api/posts
+            curl http://blueberry-cake-2991.herokuapp.com/api/posts
 </p>
 <br/>
 <hr>

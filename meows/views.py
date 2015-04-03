@@ -21,9 +21,8 @@ from meows.serializers import UserSerializer
 from django.core.cache import cache
 
 def index(request):
-    posts = cache.get("latest_posts")
     for i in range(30):
-
+        posts = cache.get("latest_posts")
         if not posts: #new post has been created
             posts = User_Post.objects.order_by('-time_created')[:20]
             cache.set("latest_posts", posts)
