@@ -2,7 +2,7 @@
 .DS_Store
 locdjango
 virenv
-media/*
+media/images/*
 db.sqlite3
 *.pyc
 secrets.py
