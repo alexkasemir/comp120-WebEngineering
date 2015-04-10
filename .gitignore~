@@ -1,6 +1,5 @@
 .gitignore
 .DS_Store
-migrations/*
 locdjango
 virenv
 media/*

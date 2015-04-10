@@ -151,3 +151,6 @@ MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 DEFAULT_FILE_STORAGE = 'purrer.custom_storages.MediaStorage'
+
+#CUSTOM USER
+CUSTOM_USER_MODEL = 'meows.User'

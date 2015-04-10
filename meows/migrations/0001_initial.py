@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.utils.timezone
 
 
 class Migration(migrations.Migration):
@@ -54,7 +55,7 @@ class Migration(migrations.Migration):
             name='Friends',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('created', models.DateField()),
+                ('created', models.DateField(auto_now_add=True)),
             ],
             options={
             },
@@ -73,14 +74,15 @@ class Migration(migrations.Migration):
             name='User',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('password', models.CharField(max_length=128, verbose_name='password')),
                 ('username', models.CharField(unique=True, max_length=25)),
                 ('owner_email', models.EmailField(unique=True, max_length=50)),
-                ('password', models.CharField(max_length=50)),
-                ('icon_URL', models.ImageField(height_field=50, width_field=50, upload_to=b'')),
-                ('active', models.BooleanField()),
-                ('member_since', models.DateField()),
+                ('icon_URL', models.ImageField(upload_to=b'')),
+                ('active', models.BooleanField(default=True)),
+                ('member_since', models.DateTimeField(auto_now_add=True)),
             ],
             options={
+                'abstract': False,
             },
             bases=(models.Model,),
         ),
@@ -88,13 +90,13 @@ class Migration(migrations.Migration):
             name='User_Post',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('contains_image', models.BooleanField()),
-                ('image_URL', models.ImageField(upload_to=b'')),
+                ('contains_image', models.BooleanField(default=False)),
+                ('image_URL', models.ImageField(null=True, upload_to=b'', blank=True)),
                 ('text_content', models.TextField(max_length=255)),
-                ('score', models.IntegerField()),
-                ('time_created', models.DateField()),
-                ('time_edited', models.DateField()),
-                ('active', models.BooleanField()),
+                ('score', models.IntegerField(default=0)),
+                ('time_created', models.DateTimeField(auto_now_add=True)),
+                ('time_edited', models.DateTimeField(auto_now=True)),
+                ('active', models.BooleanField(default=True)),
             ],
             options={
             },
