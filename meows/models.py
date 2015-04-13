@@ -42,6 +42,30 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.username
 
+#    email = models.EmailField(default='', unique=True)
+#    username = models.CharField(max_length=40, unique=True)
+
+#    first_name = models.CharField(max_length=40, blank=True)
+#    last_name = models.CharField(max_length=40, blank=True)
+
+#    is_admin = models.BooleanField(default=False)
+
+#    member_since = models.DateTimeField(auto_now_add=True)
+
+#    objects = UserManager()
+
+#    USERNAME_FIELD = 'email'
+#    REQURIED_FIELDS = ['username']
+
+    def _unicode_(self):
+        return self.email
+
+    def get_full_name(self):
+        return ' '.join([self.first_name, self.last_name])
+
+    def get_short_name(self):
+        return self.first_name
+
 
 class User_Post(models.Model):
     contains_image = models.BooleanField(default = False)

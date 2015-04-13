@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from meows.models import User, User_Post, UserPostForm
+import time
 
 from django.http import HttpResponseRedirect
 #from purrer.settings import MEDIA_ROOT
@@ -21,15 +22,14 @@ from django.core.cache import cache
 
 def index(request):
     posts = cache.get("latest_posts")
-    if not posts:
+    if not posts: #new post has been created
         posts = User_Post.objects.order_by('-time_created')[:20]
         cache.set("latest_posts", posts)
-    # latest_posts = User_Post.objects.order_by('-time_created')[:10]
-    template = loader.get_template('meows/Pages/index.html')
-    context = RequestContext(request, {
-        'latest_posts': posts,
-    })
-    return HttpResponse(template.render(context))
+        # template = loader.get_template('meows/Pages/index.html')
+        # context = RequestContext(request, {
+        #     'latest_posts': posts,
+        # })
+    return render(request, 'meows/Pages/index.html', {'latest_posts': posts} )
 
 def detail(request, user_post_id):
     try:
@@ -105,7 +105,7 @@ def post_dislike(request, user_post_id):
 @api_view(['GET', 'POST'])
 def api_post_collection(request):
     if request.method == 'GET':
-        posts = User_Post.objects.all()
+        posts = User_Post.objects.order_by('-time_created')[:20]
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':

@@ -4,10 +4,11 @@ CACHE:
 
 style.css
 single_post.css
+new_post.css
 script.js
 script.min.js
 jquery-1.11.2.min.js
-new_post.css
+
 
 NETWORK:
 *

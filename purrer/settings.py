@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,10 +40,11 @@ INSTALLED_APPS = (
     'storages',
     'bootstrap3',
     'rest_framework',
+    
 )
 
 MIDDLEWARE_CLASSES = (
-    # 'html5_appcache.middleware.appcache_middleware.AppCacheAssetsFromResponse',
+    #'html5_appcache.middleware.appcache_middleware.AppCacheAssetsFromResponse',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,6 +88,10 @@ def get_cache():
     }
 
 CACHES = get_cache()
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+}
 
 
 # Database

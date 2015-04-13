@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	var purr = $(".purrButton");
 	var grr = $(".grrButton");
+	var more_meows = $(".Add_Post_Button");
+	long_poll();
 	function getCookie(name) {
 	    var cookieValue = null;
 	    if (document.cookie && document.cookie != '') {
@@ -87,5 +89,16 @@ $(document).ready(function(){
 		    	success:function(response){console.log("disLiked!")},
 		    	error:function (xhr, textStatus, thrownError){console.log("disLike Failed :(")}
 		});
+	});
+
+	more_meows.click(function() {
+		console.log("devil");
+		for(var i in newPostStack){
+			var test =$("#latest_posts");
+			console.log(test);
+			test.prepend(newPostStack[i]);
+		}	
+		newPostStack = [];
+		$('.Add_Post_Button_Container').css("visibility", "hidden");
 	});
 });
