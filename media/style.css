@@ -10,6 +10,9 @@ nav {
 .navbar-brand:hover {
 	color: #FFCC87 !important;
 }
+.navbar-items {
+	color: white !important;
+}
 .center-block {
   text-align: center !important;
   margin-bottom: 20px;

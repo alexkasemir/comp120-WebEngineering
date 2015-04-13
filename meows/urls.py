@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from meows import views
 
 urlpatterns = patterns('',
@@ -13,6 +13,13 @@ urlpatterns = patterns('',
     url(r'^api/posts', views.api_post_collection),
     url(r'^api/users', views.api_user_collection),
     url(r'^api/docs', views.api_docs),
+    url(r'^register$', views.register),
+    url(r'^register_user', views.register_user),
+    url(r'^login_user$', views.login_user),
+    url(r'^login$', views.login),
+    url(r'^logout$', views.logout, name='logout'),
+    #url('^', include('django.contrib.auth.urls')),
+    #url('^login/', 'django.contrib.auth.views.login', {'template_name': 'meows/Pages/login.html'}),
 )
 
 # urlpatterns += patterns('',

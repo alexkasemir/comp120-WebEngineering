@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.core.cache import cache
 
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response, redirect
 
 from django.core.urlresolvers import reverse
 
@@ -19,6 +19,10 @@ from meows.serializers import PostSerializer
 from meows.serializers import UserSerializer
 
 from django.core.cache import cache
+
+from django.contrib.auth import login as django_login, authenticate, logout as django_logout
+
+from meows.forms import AuthenticationForm, RegistrationForm
 
 def index(request):
     posts = cache.get("latest_posts")
@@ -100,6 +104,46 @@ def post_dislike(request, user_post_id):
     user_post.save()
     cache.delete("latest_posts")
     return HttpResponse(status=201)
+
+#create new user form
+#create new user
+def register_user(request):
+    form = RegistrationForm()
+    return render(request, 'meows/Pages/register.html', {'form': form})
+
+def register(request):
+    #return render(request, 'meows/Pages/register.html')
+    if request.method == 'POST':
+        form = RegistrationForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('/')
+    else: 
+        form = RegistrationForm()
+    return render_to_response('meows/Pages/register.html', {'form': form}, context_instance=RequestContext(request))
+
+def login_user(request):
+    form = AuthenticationForm()
+    return render(request, 'meows/Pages/login.html', {'form': form})
+
+def login(request):
+    #return render(request, 'meows/Pages/login.html')
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = authenticate(username=request.POST['username'], password=request.POST['password'])
+            if user is not None:
+                if user.is_active:
+                    django_login(request, user)
+                    print "In! \n\n\n\n\n\n\n\n"
+                    return redirect('/')
+    else: 
+        form = AuthenticationForm()
+    return render_to_response('meows/Pages/login.html', {'form': form}, context_instance=RequestContext(request))
+
+def logout(request):
+    django_logout(request)
+    return redirect('/')
 
 #API Functionality
 @api_view(['GET', 'POST'])
