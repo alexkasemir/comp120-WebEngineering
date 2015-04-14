@@ -30,6 +30,7 @@ class User(AbstractBaseUser):
 
 
 class User_Post(models.Model):
+    creator = models.TextField(max_length = 255)
     contains_image = models.BooleanField(default = False)
     image_URL = models.ImageField(blank = True, null=True)
     text_content = models.TextField(max_length = 255)

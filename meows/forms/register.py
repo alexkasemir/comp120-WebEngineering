@@ -2,10 +2,6 @@ from django import forms
 from meows.models import User
 
 class RegistrationForm(forms.ModelForm):
-        class Meta:
-                model = User
-                fields = ['username', 'email', 'password', 'conf_password']
-
         #username = forms.CharField(widget=forms.widget.TextInput,label="username")
         username = forms.CharField(label="username")
         #email = forms.EmailField(widget=forms.widget.TextInput,label="Email")
@@ -27,3 +23,6 @@ class RegistrationForm(forms.ModelForm):
     		if commit:
     			user.save()
     		return user
+        class Meta:
+                model = User
+                fields = ['username', 'email', 'password', 'conf_password']

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import django.utils.timezone
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -11,6 +12,23 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='User',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('password', models.CharField(max_length=128, verbose_name='password')),
+                ('last_login', models.DateTimeField(default=django.utils.timezone.now, verbose_name='last login')),
+                ('username', models.CharField(unique=True, max_length=25)),
+                ('email', models.EmailField(unique=True, max_length=50)),
+                ('icon_URL', models.ImageField(upload_to=b'')),
+                ('active', models.BooleanField(default=True)),
+                ('member_since', models.DateTimeField(auto_now_add=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
         migrations.CreateModel(
             name='Album',
             fields=[
@@ -56,6 +74,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateField(auto_now_add=True)),
+                ('from_user', models.ForeignKey(related_name='from_user', to=settings.AUTH_USER_MODEL)),
+                ('to_user', models.ForeignKey(related_name='to_user', to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -67,23 +87,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
             ],
             options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='User',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(default=django.utils.timezone.now, verbose_name='last login')),
-                ('username', models.CharField(unique=True, max_length=25)),
-                ('owner_email', models.EmailField(unique=True, max_length=50)),
-                ('icon_URL', models.ImageField(upload_to=b'')),
-                ('active', models.BooleanField(default=True)),
-                ('member_since', models.DateTimeField(auto_now_add=True)),
-            ],
-            options={
-                'abstract': False,
             },
             bases=(models.Model,),
         ),
@@ -112,19 +115,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='posts',
             name='user_id',
-            field=models.ForeignKey(to='meows.User'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='friends',
-            name='from_user',
-            field=models.ForeignKey(related_name='from_user', to='meows.User'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='friends',
-            name='to_user',
-            field=models.ForeignKey(related_name='to_user', to='meows.User'),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -136,7 +127,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='feedback',
             name='user_id',
-            field=models.ForeignKey(to='meows.User'),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -148,7 +139,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='comment',
             name='user_id',
-            field=models.ForeignKey(to='meows.User'),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
             preserve_default=True,
         ),
         migrations.AddField(

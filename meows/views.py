@@ -54,7 +54,7 @@ def new_post(request):
 #         dest.write(chunk)
 #     dest.close()
 
-@login_required()
+
 def create_post(request):
     # print(request.FILES)
     # user_post = User_Post.create(request.POST.get('text_content'))
@@ -71,13 +71,16 @@ def create_post(request):
 
 
     #post = User_Post()
+    user = request.user
+    print "user is "
+    print user
+    print "\n\n\n\n\n\n\n"
     form = UserPostForm(request.POST, request.FILES)
     print(form)
     if form.is_valid():
         user_post = form.save(commit=False)
-        print(user_post.time_edited)
+        user_post.creator = user
         user_post.save()
-        print(user_post.time_edited)
         cache.delete("latest_posts")
         form.save_m2m()
         return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
@@ -85,7 +88,7 @@ def create_post(request):
         return render(request, 'meows/Pages/new_post.html', {'form': form})
 
 
-@login_required()
+
 def post_like(request, user_post_id):
    # print "LIKE!!!!!\n\n\n\n\n\n"
     try:
@@ -99,7 +102,7 @@ def post_like(request, user_post_id):
     return HttpResponse(status=201)
 
 
-@login_required()
+
 def post_dislike(request, user_post_id):
    # print "DISLIKE!!!!!\n\n\n\n\n\n"
     try:

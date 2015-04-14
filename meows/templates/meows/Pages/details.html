@@ -1,5 +1,8 @@
 {% block body_content %}
   <div class="container-post" id= "{{user_post.id}}" >
+    <div class="well">
+      Created by: {{user_post.creator}}
+    </div>
     {% if user_post.text_content %}
       <div class="post-content">
         <h1>"{{user_post.text_content}}"</h1>
