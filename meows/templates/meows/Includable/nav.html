@@ -4,9 +4,21 @@
       <li>
         <a class="navbar-items" href="/accounts/register">Register</a>
       </li>
+      {% if user.is_authenticated %}
+      <li>
+        <a class="navbar-items" href="/accounts/logout">Logout</a>
+      </li>
+      {% else %}
       <li>
         <a class="navbar-items" href="/accounts/login">Login</a>
       </li>
+      <li>
+        <a class="navbar-items" href="/accounts/register">Register</a>
+      </li>
+      {% endif %}
+
+
+
     </ul>
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">

@@ -2,14 +2,21 @@ from django import forms
 from meows.models import User
 
 class RegistrationForm(forms.ModelForm):
-        #username = forms.CharField(widget=forms.widget.TextInput,label="username")
-        username = forms.CharField(label="username")
-        #email = forms.EmailField(widget=forms.widget.TextInput,label="Email")
-        email = forms.EmailField(label="Email")
-    	#password = forms.CharField(widget=forms.widget.PasswordInput, label="Password")
-        password = forms.CharField(label="Password")
-    	#conf_password = forms.CharField(widget=forms.widget.PasswordInput, label="Password (again)")
-        conf_password = forms.CharField(label="Password (again)")
+        class Meta:
+                model = User
+                fields = ['username', 'email', 'password', 'conf_password']
+                # widgets = {
+                #     'password': forms.PasswordInput(),
+                # }
+
+        username = forms.CharField(widget=forms.TextInput,label="username")
+        #username = forms.CharField(label="username")
+        email = forms.EmailField(widget=forms.TextInput,label="Email")
+        #email = forms.EmailField(label="Email")
+    	password = forms.CharField(widget=forms.PasswordInput, label="Password")
+        #password = forms.CharField(label="Password")
+    	conf_password = forms.CharField(widget=forms.PasswordInput, label="Password (again)")
+        #conf_password = forms.CharField(label="Password (again)")
 
     	def clean(self):
     		cleaned_data = super(RegistrationForm, self).clean()
