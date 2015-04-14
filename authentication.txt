@@ -19,3 +19,25 @@ user is active, user email, and user password (hashed of course!) all
 require authentiaton. Username, icon url, and member since are freely
 available. An authenticated admin also has the ability to view a dump
 of all users and their information. 
+
+
+_______________________________
+
+
+
+Requires login (implemented)- 
+
+Viewing posts
+Creating a post
+Upvoting or downvoting
+
+
+Requires post to match user, or admin (features not yet available) -
+
+deleting a post
+editing a post
+
+
+Requires admin access (features not yet available)
+
+viewing user information
