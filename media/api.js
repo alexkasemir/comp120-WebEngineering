@@ -1,19 +1,19 @@
 function getAllPosts() {
-    return httpGet('https://banana-cake-3532.herokuapp.com/meows/api/posts/?format=json');
+    return httpGet('http://blueberry-cake-2991.herokuapp.com/api/posts/?format=json');
 }
 
 function getPostById(id) {
-    return httpGet('https://banana-cake-3532.herokuapp.com/meows/api/posts/' + id.toString() +'?format=json');
+    return httpGet('http://blueberry-cake-2991.herokuapp.com//api/posts/' + id.toString() +'?format=json');
 }
 
 function getUserByUsername(username) {
-    return httpGet('https://banana-cake-3532.herokuapp.com/meows/api/users/' + username.toString() +'?format=json');
+    return httpGet('http://blueberry-cake-2991.herokuapp.com//api/users/' + username.toString() +'?format=json');
 }
 
 
 function createUser(username, password, email) {
     var header = "username=" + username + "&email=" + email;
-    return httpPost('https://banana-cake-3532.herokuapp.com/meows/api/users/', header);
+    return httpPost('http://blueberry-cake-2991.herokuapp.com/api/users/', header);
 }
 function httpGet(url)
 {

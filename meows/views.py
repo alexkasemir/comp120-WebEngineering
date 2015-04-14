@@ -21,8 +21,10 @@ from meows.serializers import UserSerializer
 from django.core.cache import cache
 
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
+from django.contrib.auth.decorators import login_required
 
 from meows.forms import AuthenticationForm, RegistrationForm
+
 
 def index(request):
     posts = cache.get("latest_posts")
@@ -52,6 +54,7 @@ def new_post(request):
 #         dest.write(chunk)
 #     dest.close()
 
+@login_required()
 def create_post(request):
     # print(request.FILES)
     # user_post = User_Post.create(request.POST.get('text_content'))
@@ -70,7 +73,7 @@ def create_post(request):
     #post = User_Post()
     form = UserPostForm(request.POST, request.FILES)
     print(form)
-    if form.is_valid(): 
+    if form.is_valid():
         user_post = form.save(commit=False)
         print(user_post.time_edited)
         user_post.save()
@@ -82,6 +85,7 @@ def create_post(request):
         return render(request, 'meows/Pages/new_post.html', {'form': form})
 
 
+@login_required()
 def post_like(request, user_post_id):
    # print "LIKE!!!!!\n\n\n\n\n\n"
     try:
@@ -94,6 +98,8 @@ def post_like(request, user_post_id):
 
     return HttpResponse(status=201)
 
+
+@login_required()
 def post_dislike(request, user_post_id):
    # print "DISLIKE!!!!!\n\n\n\n\n\n"
     try:
@@ -118,7 +124,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             return redirect('/')
-    else: 
+    else:
         form = RegistrationForm()
     return render_to_response('meows/Pages/register.html', {'form': form}, context_instance=RequestContext(request))
 
@@ -137,6 +143,8 @@ def login(request):
                     django_login(request, user)
                     print "In! \n\n\n\n\n\n\n\n"
                     return redirect('/')
+            else:
+                print "Not in \n"
     else: 
         form = AuthenticationForm()
     return render_to_response('meows/Pages/login.html', {'form': form}, context_instance=RequestContext(request))

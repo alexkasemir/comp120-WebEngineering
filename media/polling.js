@@ -1,7 +1,6 @@
 
 var Template = function(post) {
-    var date = new Date(post.time_created);
-    
+
 
     var output = "<div class='container-post' id='" + post.id + "'>";
     if(post.text_content) {

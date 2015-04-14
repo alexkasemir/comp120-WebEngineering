@@ -27,3 +27,7 @@ nav {
 	margin-right: 10px !important;
 
 }
+
+.Add_Post_Button_Container{
+	visibility: hidden;
+}
