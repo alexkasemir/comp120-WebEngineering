@@ -26,6 +26,7 @@ from django.contrib.auth.decorators import login_required
 from meows.forms import AuthenticationForm, RegistrationForm
 
 
+
 def index(request):
     posts = cache.get("latest_posts")
     if not posts: #new post has been created
@@ -54,7 +55,6 @@ def new_post(request):
 #         dest.write(chunk)
 #     dest.close()
 
-@login_required()
 def create_post(request):
     # print(request.FILES)
     # user_post = User_Post.create(request.POST.get('text_content'))
@@ -85,7 +85,7 @@ def create_post(request):
         return render(request, 'meows/Pages/new_post.html', {'form': form})
 
 
-@login_required()
+
 def post_like(request, user_post_id):
    # print "LIKE!!!!!\n\n\n\n\n\n"
     try:
@@ -99,7 +99,7 @@ def post_like(request, user_post_id):
     return HttpResponse(status=201)
 
 
-@login_required()
+
 def post_dislike(request, user_post_id):
    # print "DISLIKE!!!!!\n\n\n\n\n\n"
     try:

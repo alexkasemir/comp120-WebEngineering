@@ -3,8 +3,12 @@
 {%block page_title %}Welcome to Purrer! {%endblock %}
 
 {% block body_content %}
+
   <span class="center-block">
+    {% if user.is_authenticated %}
+    <h1> Hello {{user.username}}, do you want to purr? </h1>
     <a class="btn btn-lg btn-default index_elems" href="/new_post">Create Purrr</a>
+    {% endif %}
   </span>
   <div class="Add_Post_Button_Container center-block" >
     <button class="Add_Post_Button btn btn-lg btn-default">MORE MEOWWWSSSS</button>
