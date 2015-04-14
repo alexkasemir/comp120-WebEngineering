@@ -19,8 +19,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
-import secrets
-SECRET_KEY = secrets.SECRET_KEY
+#import secrets
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'purrer'
+#SECRET_KEY = secrets.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -141,9 +145,11 @@ USE_TZ = True
 #     'Cache-Control': 'max-age=94608000',
 # }
 
-AWS_STORAGE_BUCKET_NAME = secrets.BUCKET_NAME
-AWS_ACCESS_KEY_ID = secrets.KEY_ID
-AWS_SECRET_ACCESS_KEY = secrets.ACCESS_KEY
+
+
+#AWS_STORAGE_BUCKET_NAME = secrets.BUCKET_NAME
+#AWS_ACCESS_KEY_ID = secrets.KEY_ID
+#AWS_SECRET_ACCESS_KEY = secrets.ACCESS_KEY
 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
