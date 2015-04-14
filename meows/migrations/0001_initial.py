@@ -94,6 +94,7 @@ class Migration(migrations.Migration):
             name='User_Post',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('creator', models.TextField(max_length=255)),
                 ('contains_image', models.BooleanField(default=False)),
                 ('image_URL', models.ImageField(null=True, upload_to=b'', blank=True)),
                 ('text_content', models.TextField(max_length=255)),
