@@ -57,11 +57,8 @@ def new_post(request):
 #         dest.write(chunk)
 #     dest.close()
 
-<<<<<<< HEAD
 
-=======
 @login_required
->>>>>>> 5a0f897bc267f209a730753f78db44ce0d34eaaa
 def create_post(request):
     # print(request.FILES)
     # user_post = User_Post.create(request.POST.get('text_content'))

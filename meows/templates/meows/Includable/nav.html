@@ -1,9 +1,6 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <ul class="nav navbar-nav navbar-right">
-      <li>
-        <a class="navbar-items" href="/accounts/register">Register</a>
-      </li>
       {% if user.is_authenticated %}
       <li>
         <a class="navbar-items" href="/accounts/logout">Logout</a>
