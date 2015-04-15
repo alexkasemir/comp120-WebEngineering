@@ -1,3 +1,3 @@
 ##Purrer Readme##
 
-Website available at: http://blueberry-cake-2991.herokuapp.com/
+Website available at: http://purrer.herokuapp.com/
