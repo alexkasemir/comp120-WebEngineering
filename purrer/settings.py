@@ -74,24 +74,24 @@ ROOT_URLCONF = 'purrer.urls'
 WSGI_APPLICATION = 'purrer.wsgi.application'
 
 def get_cache():
-  import os
-  try:
-    os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS'].replace(',', ';')
-    os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
-    os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
-    return {
-      'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-        'TIMEOUT': 500,
-        'BINARY': True,
-        'OPTIONS': { 'tcp_nodelay': True }
-      }
-    }
-  except:
-    return {
-      'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-      }
+    import os
+    try:
+        os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS'].replace(',', ';')
+        os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
+        os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
+        return {
+            'default': {
+                'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+                'TIMEOUT': 500,
+                'BINARY': True,
+                'OPTIONS': {'tcp_nodelay': True}
+            }
+        }
+    except:
+        return {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+        }
     }
 
 CACHES = get_cache()
@@ -111,14 +111,28 @@ REST_FRAMEWORK = {
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'myDB',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+# import dj_database_url
+# import os
+
+# POSTGRES_URL = 'HEROKU_POSTGRESQL_CRIMSON_URL'
+# DATABASES = {'default': dj_database_url.config(default=os.environ[POSTGRES_URL])}
 
 import dj_database_url
+DATABASES = {'default': dj_database_url.config(default='postgres://lnxmdqcbkymlta:VpB7WQKR91TetHG1M2ffnyfX20@ec2-23-21-94-137.compute-1.amazonaws.com:5432/d5bnookcdtvb08')}
 
-DATABASES = {}
+#DATABASES = {'default': dj_database_url.config(default=os.environ['DATABASE_URL'])}
 
-DATABASES['default'] = dj_database_url.config()
+# DATABASES['default'] = dj_database_url.config()
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 AUTH_USER_MODEL = 'meows.User'
 

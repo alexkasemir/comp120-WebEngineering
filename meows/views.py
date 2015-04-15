@@ -29,14 +29,15 @@ from meows.forms import AuthenticationForm, RegistrationForm
 @login_required
 def index(request):
     posts = cache.get("latest_posts")
-    if not posts: #new post has been created
+    if not posts:  # new post has been created
         posts = User_Post.objects.order_by('-time_created')[:20]
         cache.set("latest_posts", posts)
         # template = loader.get_template('meows/Pages/index.html')
         # context = RequestContext(request, {
         #     'latest_posts': posts,
         # })
-    return render(request, 'meows/Pages/index.html', {'latest_posts': posts} )
+    return render(request, 'meows/Pages/index.html', {'latest_posts': posts})
+
 
 @login_required
 def detail(request, user_post_id):
@@ -45,6 +46,7 @@ def detail(request, user_post_id):
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
     return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post, 'count': user_post_id})
+
 
 @login_required
 def new_post(request):
@@ -72,15 +74,10 @@ def create_post(request):
     # user_post.save()
     # cache.delete("latest_posts")
     # return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
-
-
     #post = User_Post()
     user = request.user
-    print "user is "
-    print user
-    print "\n\n\n\n\n\n\n"
     form = UserPostForm(request.POST, request.FILES)
-    print(form)
+
     if form.is_valid():
         user_post = form.save(commit=False)
         user_post.creator = user
@@ -106,7 +103,6 @@ def post_like(request, user_post_id):
     return HttpResponse(status=201)
 
 
-
 @login_required
 def post_dislike(request, user_post_id):
    # print "DISLIKE!!!!!\n\n\n\n\n\n"
@@ -119,11 +115,13 @@ def post_dislike(request, user_post_id):
     cache.delete("latest_posts")
     return HttpResponse(status=201)
 
+
 #create new user form
 #create new user
 def register_user(request):
     form = RegistrationForm()
     return render(request, 'meows/Pages/register.html', {'form': form})
+
 
 def register(request):
     #return render(request, 'meows/Pages/register.html')
@@ -136,9 +134,11 @@ def register(request):
         form = RegistrationForm()
     return render_to_response('meows/Pages/register.html', {'form': form}, context_instance=RequestContext(request))
 
+
 def login_user(request):
     form = AuthenticationForm()
     return render(request, 'meows/Pages/login.html', {'form': form})
+
 
 def login(request):
     #return render(request, 'meows/Pages/login.html')
@@ -149,17 +149,16 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
-                    print "In! \n\n\n\n\n\n\n\n"
                     return redirect('/')
-            else:
-                print "Not in \n"
-    else: 
+    else:
         form = AuthenticationForm()
     return render_to_response('meows/Pages/login.html', {'form': form}, context_instance=RequestContext(request))
+
 
 def logout(request):
     django_logout(request)
     return redirect('/')
+
 
 #API Functionality
 @api_view(['GET', 'POST'])
@@ -175,7 +174,7 @@ def api_post_collection(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
 
 @api_view(['GET'])
 def api_post_element(request, user_post_id):
@@ -188,6 +187,7 @@ def api_post_element(request, user_post_id):
         serializer = PostSerializer(post)
         return Response(serializer.data)
 
+
 @api_view(['GET', 'POST'])
 def api_user_collection(request):
     if request.method == 'GET':
@@ -195,7 +195,7 @@ def api_user_collection(request):
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        user_info = {"username": request.DATA.get('username'), "owner_email": request.DATA.get('owner_email')}
+        user_info = {"username": request.DATA.get('username'), "email": request.DATA.get('email')}
         serializer = UserSerializer(data=user_info)
         if serializer.is_valid():
             serializer.save()
@@ -215,8 +215,5 @@ def api_user_element(request, user_id):
         return Response(serializer.data)
 
 
-        
-
 def api_docs(request):
     return render(request, 'meows/Pages/apidocs.html')
-

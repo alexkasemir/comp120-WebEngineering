@@ -10,4 +10,4 @@ class UserSerializer(serializers.ModelSerializer):
 	#password = serializers.CharField(write_only=True, required=False)
 	class Meta:
 		model = User
-		fields = ('username', 'owner_email', 'active', 'member_since', 'id')
+		fields = ('username', 'email', 'active', 'member_since', 'id')
