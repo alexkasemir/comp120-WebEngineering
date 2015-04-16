@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from meows.models import User, User_Post, UserPostForm
+from meows.models import User, User_Post
 import time
 
 from django.http import HttpResponseRedirect
@@ -24,13 +24,15 @@ from django.contrib.auth import login as django_login, authenticate, logout as d
 from django.contrib.auth.decorators import login_required
 
 from meows.forms import AuthenticationForm, RegistrationForm
+from meows.forms import UserPostForm
 
 
 @login_required
 def index(request):
     posts = cache.get("latest_posts")
+    print posts
     if not posts:  # new post has been created
-        posts = User_Post.objects.order_by('-time_created')[:20]
+        posts = User_Post.objects.order_by('-id')[:20]
         cache.set("latest_posts", posts)
         # template = loader.get_template('meows/Pages/index.html')
         # context = RequestContext(request, {
@@ -92,6 +94,8 @@ def create_post(request):
 @login_required
 def post_like(request, user_post_id):
    # print "LIKE!!!!!\n\n\n\n\n\n"
+    request.user = user
+
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:

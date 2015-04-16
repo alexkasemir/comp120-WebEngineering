@@ -126,9 +126,9 @@ REST_FRAMEWORK = {
 # DATABASES = {'default': dj_database_url.config(default=os.environ[POSTGRES_URL])}
 
 import dj_database_url
-DATABASES = {'default': dj_database_url.config(default='postgres://lnxmdqcbkymlta:VpB7WQKR91TetHG1M2ffnyfX20@ec2-23-21-94-137.compute-1.amazonaws.com:5432/d5bnookcdtvb08')}
+#DATABASES = {'default': dj_database_url.config(default='postgres://lnxmdqcbkymlta:VpB7WQKR91TetHG1M2ffnyfX20@ec2-23-21-94-137.compute-1.amazonaws.com:5432/d5bnookcdtvb08')}
 
-#DATABASES = {'default': dj_database_url.config(default=os.environ['DATABASE_URL'])}
+DATABASES = {'default': dj_database_url.config(default=os.environ['DATABASE_URL'])}
 
 # DATABASES['default'] = dj_database_url.config()
 

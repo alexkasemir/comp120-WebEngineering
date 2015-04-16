@@ -1,5 +1,5 @@
 from django.db import models
-from django import forms
+#from django import forms
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import User
 from django.contrib.auth.models import BaseUserManager
@@ -7,12 +7,12 @@ from django.contrib.auth.models import UserManager
 
 class User(AbstractBaseUser):
     #user = models.OneToOneField(User)
-    username = models.CharField(max_length = 25, unique= True)
-    email = models.EmailField(max_length = 50, unique= True)
+    username = models.CharField(max_length=25, unique=True)
+    email = models.EmailField(max_length=50, unique=True)
     #password = models.CharField(max_length = 50)
     icon_URL = models.ImageField()
-    active = models.BooleanField(default = True)
-    member_since = models.DateTimeField(auto_now_add = True)
+    active = models.BooleanField(default=True)
+    member_since = models.DateTimeField(auto_now_add=True)
     USERNAME_FIELD = 'username'
     objects = UserManager()
 
@@ -30,30 +30,26 @@ class User(AbstractBaseUser):
 
 
 class User_Post(models.Model):
-    creator = models.TextField(max_length = 255)
-    contains_image = models.BooleanField(default = False)
-    image_URL = models.ImageField(blank = True, null=True)
-    text_content = models.TextField(max_length = 255)
-    score = models.IntegerField(default = 0)
-    time_created = models.DateTimeField(auto_now_add = True)
-    time_edited = models.DateTimeField(auto_now = True)
-    active = models.BooleanField(default = True)
+    creator = models.TextField(max_length=255)
+    contains_image = models.BooleanField(default=False)
+    image_URL = models.ImageField(blank=True, null=True)
+    text_content = models.TextField(max_length=255)
+    score = models.IntegerField(default=0)
+    time_created = models.DateTimeField(auto_now_add=True)
+    time_edited = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
 
     @staticmethod
     def create(text_cont):
         user_post = User_Post(text_content=text_cont)
         return user_post
 
-class UserPostForm(forms.ModelForm):
-    class Meta:
-        model = User_Post
 
-        fields = ["image_URL", "text_content"]
 
 class Friends(models.Model):
-    from_user = models.ForeignKey(User, related_name = 'from_user')
-    to_user = models.ForeignKey(User, related_name = 'to_user')
-    created = models.DateField(auto_now_add = True)
+    from_user = models.ForeignKey(User, related_name='from_user')
+    to_user = models.ForeignKey(User, related_name='to_user')
+    created = models.DateField(auto_now_add=True)
 
 class Posts(models.Model):
     user_id = models.ForeignKey(User)
@@ -71,10 +67,10 @@ class Feedback(models.Model):
 class Comment(models.Model):
     user_id = models.ForeignKey(User)
     post_id = models.ForeignKey(User_Post)
-    content = models.TextField(max_length = 255)
+    content = models.TextField(max_length=255)
 
 class Album(models.Model):
-    name = models.CharField(max_length = 127)
+    name = models.CharField(max_length=127)
 
 class Albums(models.Model):
     album_id = models.ForeignKey(Album)
