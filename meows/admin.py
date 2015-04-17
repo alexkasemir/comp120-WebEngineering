@@ -1,5 +1,5 @@
 from django.contrib import admin
-from meows.models import User, User_Post, Friends, Posts, Feedback, Comment, Album, Albums
+from meows.models import User, User_Post, Friends, Posts, Comment, Album, Albums, Feedback
 
 # Register your models here.
 admin.site.register(User)

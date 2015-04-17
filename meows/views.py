@@ -31,6 +31,8 @@ from meows.forms import UserPostForm
 def index(request):
     user = request.user
     liked = User_Post.objects.filter(purrs_grrs=user)
+    feedback = Feedback.objects.all()
+    #disliked = User_Post.objects.filter(grrs=user)
     posts = cache.get("latest_posts")
     #print posts
     if not posts:  # new post has been created
@@ -40,7 +42,7 @@ def index(request):
         # context = RequestContext(request, {
         #     'latest_posts': posts,
         # })
-    return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked})
+    return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'feedback': feedback})
 
 
 @login_required
@@ -97,21 +99,20 @@ def create_post(request):
 def post_like(request, user_post_id):
    # print "LIKE!!!!!\n\n\n\n\n\n"
     user = request.user
-
+    # print user
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
 
-
-
-    if user_post.purrs_grrs.filter(pk=user.pk):
+    did_purr = user_post.purrs_grrs.filter(pk=user_post_id)
+    if did_purr:
         print "You can't purr that"
     else:
-        cache.delete("latest_posts")
         feedback = Feedback(post_id=user_post, user_id=user, purr_grr='p')
         feedback.save()
-        print user_post.purrs_grrs.all()
+        cache.delete("latest_posts")
+        #user_post.purrs.add(user)
         user_post.score += 1
         user_post.save()
 
@@ -130,12 +131,12 @@ def post_dislike(request, user_post_id):
 
     did_grr = user_post.purrs_grrs.filter(pk=user.pk)
     if did_grr:
-        print did_grr.purr_grr
+        print "no"
     else:
         cache.delete("latest_posts")
-        feedback = Feedback(post_id=user_post, user_id=user, purr_grr='d')
+        feedback = Feedback(post_id=user_post, user_id=user, purr_grr='g')
         feedback.save()
-        print user_post.purrs_grrs.all()
+        # print user_post.purrs_grrs.all()
         user_post.score -= 1
         user_post.save()
     return HttpResponse(status=201)
@@ -147,7 +148,7 @@ def who_purr_post(request, post_id):
         who_liked = User_Post.objects.filter(user_post=user_post)
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
-    
+
 
 
 #create new user form

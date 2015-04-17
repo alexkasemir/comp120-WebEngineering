@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
             name='Feedback',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('like_dislike', models.CharField(max_length=1, choices=[(b'l', b'like'), (b'd', b'dislike')])),
+                ('purr_grr', models.CharField(blank=True, max_length=1, choices=[(b'p', b'purr'), (b'g', b'grr')])),
             ],
             options={
             },
@@ -102,6 +102,7 @@ class Migration(migrations.Migration):
                 ('time_created', models.DateTimeField(auto_now_add=True)),
                 ('time_edited', models.DateTimeField(auto_now=True)),
                 ('active', models.BooleanField(default=True)),
+                ('purrs_grrs', models.ManyToManyField(to=settings.AUTH_USER_MODEL, through='meows.Feedback')),
             ],
             options={
             },

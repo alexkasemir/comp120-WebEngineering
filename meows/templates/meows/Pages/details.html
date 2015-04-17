@@ -26,10 +26,23 @@
         <h4 class="postInfo">Created At: {{user_post.time_created}} | Score: {{user_post.score}}</h4>
         <button class='btn btn-danger grrButton pull-right' id="{{user_post.id}}">Grrrrr!</button>
         {% endif %}
-        
       </div>
+      {% if user_post.purrs_grrs.all %}
+        <div class="well">
+          {%for u in feedback%}
+            {% if user_post == u.post_id%}
+              {%if u.purr_grr == 'p'%}
+                <font color="green">{{u.user_id}}</font>
+              {%elif u.purr_grr == 'g'%}
+                <font color="red">{{u.user_id}}</font>
+              {%endif%}
+            {% endif %}
+          {%endfor%}
+        </div>
+      {% endif %}
+
     </div>
 
-</div>
+  </div>
   
 {% endblock %}
