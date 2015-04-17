@@ -1,11 +1,27 @@
+// Prevent XSS Attacks
+var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+};
+
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+        return entityMap[s];
+    });
+}
 
 var Template = function(post) {
 
 
     var output = "<div class='container-post' id='" + post.id + "'>";
     if(post.text_content) {
-        output = output + '<div class="post-content"> <h1>' + post.text_content +'</h1></div>';
-    }
+
+        output = output + '<div class="post-content"> <h1>' + escapeHtml(post.text_content) +'</h1></div>';
+    }   
     if(post.image_URL) {
         output = output + '<div class="post-content"><img src="https://purrer.s3.amazonaws.com/media/' + post.image_URL + '"/></div>';
     }
@@ -28,7 +44,6 @@ function long_poll(){
 
             },
             success: function(data){
-                console.log(data);
                 data_length = data.length;
                 newest_post_id = data[0].id;
                 if (newest_post_id > highest_posted_id){
@@ -46,7 +61,7 @@ function long_poll(){
                     //prepend onto latest_post
                 }
                 if(newPostStack.length !== 0){
-                    console.log("here");
+
                     $('.Add_Post_Button_Container').css("visibility","visible");
                 }
             }
