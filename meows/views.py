@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from meows.models import User, User_Post, UserPostForm
+from meows.models import User, User_Post, Feedback
 import time
 
 from django.http import HttpResponseRedirect
@@ -25,19 +25,23 @@ from django.contrib.auth.decorators import login_required
 
 from meows.forms import AuthenticationForm, RegistrationForm
 import json
+from meows.forms import UserPostForm
 
 
 @login_required
 def index(request):
+    user = request.user
+    liked = User_Post.objects.filter(purrs_grrs=user)
     posts = cache.get("latest_posts")
+    #print posts
     if not posts:  # new post has been created
-        posts = User_Post.objects.order_by('-time_created')[:20]
+        posts = User_Post.objects.order_by('-id')[:20]
         cache.set("latest_posts", posts)
         # template = loader.get_template('meows/Pages/index.html')
         # context = RequestContext(request, {
         #     'latest_posts': posts,
         # })
-    return render(request, 'meows/Pages/index.html', {'latest_posts': posts})
+    return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked})
 
 
 @login_required
@@ -115,13 +119,24 @@ def hashTaggify(user, text):
 @login_required
 def post_like(request, user_post_id):
    # print "LIKE!!!!!\n\n\n\n\n\n"
+    user = request.user
+
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
-    cache.delete("latest_posts")
-    user_post.score += 1
-    user_post.save()
+
+
+
+    if user_post.purrs_grrs.filter(pk=user.pk):
+        print "You can't purr that"
+    else:
+        cache.delete("latest_posts")
+        feedback = Feedback(post_id=user_post, user_id=user, purr_grr='p')
+        feedback.save()
+        print user_post.purrs_grrs.all()
+        user_post.score += 1
+        user_post.save()
 
     return HttpResponse(status=201)
 
@@ -129,14 +144,33 @@ def post_like(request, user_post_id):
 @login_required
 def post_dislike(request, user_post_id):
    # print "DISLIKE!!!!!\n\n\n\n\n\n"
+
+    user = request.user
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
     except User_Post.DoesNotExist:
         raise Http404("Post does not exist!")
-    user_post.score -= 1
-    user_post.save()
-    cache.delete("latest_posts")
+
+    did_grr = user_post.purrs_grrs.filter(pk=user.pk)
+    if did_grr:
+        print did_grr.purr_grr
+    else:
+        cache.delete("latest_posts")
+        feedback = Feedback(post_id=user_post, user_id=user, purr_grr='d')
+        feedback.save()
+        print user_post.purrs_grrs.all()
+        user_post.score -= 1
+        user_post.save()
     return HttpResponse(status=201)
+
+
+def who_purr_post(request, post_id):
+    try:
+        user_post = User_Post.objects.get(pk=user_post_id)
+        who_liked = User_Post.objects.filter(user_post=user_post)
+    except User_Post.DoesNotExist:
+        raise Http404("Post does not exist!")
+    
 
 
 #create new user form
@@ -236,6 +270,7 @@ def api_user_element(request, user_id):
     if request.method == 'GET':
         serializer = UserSerializer(user)
         return Response(serializer.data)
+
 
 
 def api_docs(request):

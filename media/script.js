@@ -1,12 +1,15 @@
 $(document).ready(function(){
 	var purr = $(".purrButton");
 	var grr = $(".grrButton");
+	var noPurr = $(".noPurrButton");
+	var noGrr = $(".noGrrButton");
 	var more_meows = $(".Add_Post_Button");
+	var whoPurred = $(".whoPurredButton");
 	long_poll();
 	function getCookie(name) {
-	    var cookieValue = null;
-	    if (document.cookie && document.cookie != '') {
-	        var cookies = document.cookie.split(';');
+		var cookieValue = null;
+		if (document.cookie && document.cookie !== ''){
+			var cookies = document.cookie.split(';');
 	        for (var i = 0; i < cookies.length; i++) {
 	            var cookie = jQuery.trim(cookies[i]);
 	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
@@ -27,9 +30,14 @@ $(document).ready(function(){
 	// }
 
 	purr.click(function(){
+
 		var csrftoken = getCookie('csrftoken');
 		var curr = $(this);
+		curr.prop('disabled', true);
 		var text = curr.next().first().text();
+		var currDislike = curr.next().next().first();
+		currDislike.prop('disabled', true);
+		console.log(currDislike);
 		var n = text.search("Score: ");
 		n = n + 7;
 		var score = text.substr(n);
@@ -39,6 +47,7 @@ $(document).ready(function(){
 		curr.next().first().text(newText);
 		var id = curr[0].id;
 
+		var string = "button#" + id;
 		function csrfSafeMethod(method) {
 		    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 		}
@@ -57,10 +66,23 @@ $(document).ready(function(){
 		    	error:function (xhr, textStatus, thrownError){console.log("Like Failed :(")}
 		});
 	});
-	
+
+	noPurr.click(function(){
+		alert("You cannot purr twice!!!");
+	});
+
+
+	noGrr.click(function(){
+		alert("You cannot grrr twice!!")
+	});
+
+
 	grr.click(function(){
 		var csrftoken = getCookie('csrftoken');
 		var curr = $(this);
+		var currLike = curr.prev().prev();
+		curr.prop('disabled', true);
+		currLike.prop('disabled', true);
 		var text = curr.prev().first().text();
 		var n = text.search("Score: ");
 		n = n + 7;
@@ -69,7 +91,7 @@ $(document).ready(function(){
 		scoreInt = scoreInt - 1;
 		var newText = text.substr(0,n) + " " + scoreInt;
 		curr.prev().first().text(newText);
-		console.log(newText);
+
 		var id = curr[0].id;
 
 		function csrfSafeMethod(method) {
@@ -91,11 +113,15 @@ $(document).ready(function(){
 		});
 	});
 
+	whoPurred.click(function() {
+		var curr = $(this);
+	});
+
 	more_meows.click(function() {
-		console.log("devil");
+
 		for(var i in newPostStack){
 			var test =$("#latest_posts");
-			console.log(test);
+
 			test.prepend(newPostStack[i]);
 		}	
 		newPostStack = [];

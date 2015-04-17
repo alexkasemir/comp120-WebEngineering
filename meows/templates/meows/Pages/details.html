@@ -5,7 +5,7 @@
     </div>
     {% if user_post.text_content %}
       <div class="post-content">
-        <h1>"{{user_post.text_content}}"</h1>
+        <h1>{{user_post.text_content}}</h1>
       </div>
     {% endif %}
     {% if user_post.image_URL %}
@@ -16,9 +16,17 @@
   
     <div class="post-info">
       <div class="post-footer">
+
+        {% if user_post in liked_posts %}
+        <button class='btn btn-success noPurrButton pull-left' id="{{user_post.id}}">Purrrr</button>
+        <h4 class="postInfo">Created At: {{user_post.time_created}} | Score: {{user_post.score}}</h4>
+        <button class='btn btn-danger noGrrButton pull-right' id="{{user_post.id}}">Grrrrr!</button>
+        {% else %}
         <button class='btn btn-success purrButton pull-left' id="{{user_post.id}}">Purrrr</button>
         <h4 class="postInfo">Created At: {{user_post.time_created}} | Score: {{user_post.score}}</h4>
         <button class='btn btn-danger grrButton pull-right' id="{{user_post.id}}">Grrrrr!</button>
+        {% endif %}
+        
       </div>
     </div>
 
