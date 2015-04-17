@@ -24,6 +24,7 @@ from django.contrib.auth import login as django_login, authenticate, logout as d
 from django.contrib.auth.decorators import login_required
 
 from meows.forms import AuthenticationForm, RegistrationForm
+import json
 
 
 @login_required
@@ -84,10 +85,32 @@ def create_post(request):
         user_post.save()
         cache.delete("latest_posts")
         form.save_m2m()
+        text = user_post.text_content
+        hashTaggify(request.user, text)
         return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
     else:
         return render(request, 'meows/Pages/new_post.html', {'form': form})
 
+def hashTaggify(user, text):
+    i = 0
+    hashtags = []
+    while i < len(text):
+        if text[i] == "#":
+            i +=  1
+            word = []
+            while i < len(text) and text[i] != " "  :
+                word.append(text[i])
+                i += 1
+            string = ''.join(word)
+            hashtags.append(str(string))
+
+        if i < len(text):
+            i += 1
+    obj = {}
+    obj['user'] = str(user)
+    obj['tags'] = hashtags
+    json_obj = json.dumps(obj)
+    print json_obj
 
 @login_required
 def post_like(request, user_post_id):
