@@ -31,17 +31,21 @@ from meows.forms import UserPostForm
 def index(request):
     user = request.user
     liked = User_Post.objects.filter(purrs_grrs=user)
-    feedback = Feedback.objects.all()
+    #feedback = Feedback.objects.filter()
     #disliked = User_Post.objects.filter(grrs=user)
     posts = cache.get("latest_posts")
-    #print posts
+    feedback = cache.get("feedback")
+    print posts
     if not posts:  # new post has been created
         posts = User_Post.objects.order_by('-id')[:20]
         cache.set("latest_posts", posts)
+
         # template = loader.get_template('meows/Pages/index.html')
         # context = RequestContext(request, {
         #     'latest_posts': posts,
         # })
+    if not feedback:
+        feedback = Feedback.objects.filter(post_id=posts)
     return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'feedback': feedback})
 
 
@@ -90,7 +94,8 @@ def create_post(request):
         user_post.save()
         cache.delete("latest_posts")
         form.save_m2m()
-        return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
+        #return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
+        return redirect('/')
     else:
         return render(request, 'meows/Pages/new_post.html', {'form': form})
 
@@ -115,6 +120,7 @@ def post_like(request, user_post_id):
         #user_post.purrs.add(user)
         user_post.score += 1
         user_post.save()
+        cache.delete("feedback")
 
     return HttpResponse(status=201)
 
@@ -139,15 +145,9 @@ def post_dislike(request, user_post_id):
         # print user_post.purrs_grrs.all()
         user_post.score -= 1
         user_post.save()
+        cache.delete("feedback")
     return HttpResponse(status=201)
 
-
-def who_purr_post(request, post_id):
-    try:
-        user_post = User_Post.objects.get(pk=user_post_id)
-        who_liked = User_Post.objects.filter(user_post=user_post)
-    except User_Post.DoesNotExist:
-        raise Http404("Post does not exist!")
 
 
 
