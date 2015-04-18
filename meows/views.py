@@ -33,17 +33,19 @@ def index(request):
     liked = User_Post.objects.filter(purrs_grrs=user)
     #feedback = Feedback.objects.filter()
     #disliked = User_Post.objects.filter(grrs=user)
+    most_recent = User_Post.objects.order_by('-id')[0]
     posts = cache.get("latest_posts")
     feedback = cache.get("feedback")
-    print posts
-    if not posts:  # new post has been created
+    if (not posts):  # new post has been created
         posts = User_Post.objects.order_by('-id')[:20]
         cache.set("latest_posts", posts)
 
         # template = loader.get_template('meows/Pages/index.html')
         # context = RequestContext(request, {
         #     'latest_posts': posts,
-        # })
+    if most_recent.pk > posts[0].pk:
+        posts = User_Post.objects.order_by('-id')[:20]
+        cache.set("latest_posts", posts)
     if not feedback:
         feedback = Feedback.objects.filter(post_id=posts)
     return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'feedback': feedback})
