@@ -9,9 +9,18 @@
   <body> 
     <div id="main">
       {% include "meows/Includable/nav.html" %}
-      {% block body_content %}
-        <h1> Content Not Found. </h1>
-      {% endblock %}
+      <div class="container">  
+        <div class="row">  
+          <div class="col-xs-3 side-piece">
+            {% include "meows/Includable/sidebar.html" %}
+          </div>
+          <div class="col-xs-offset-2 col-xs-9 body-area">
+            {% block body_content %}
+          </div>
+            <h1> Content Not Found. </h1>
+          {% endblock %}
+        </div>
+      </div>
     </div>
     <div class="base_footer">
       <h3><a href="/api/docs">API docs</a></h3> 

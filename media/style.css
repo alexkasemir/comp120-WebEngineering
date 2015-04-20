@@ -3,6 +3,10 @@ body {
 }
 nav {
 	background-color: #9E6417 !important;
+	position: fixed;
+	border: 1px white;
+	border-style: solid;
+    	border-color: white !important;
 }
 .navbar-brand {
 	color: white !important;
@@ -30,4 +34,26 @@ nav {
 
 .Add_Post_Button_Container{
 	visibility: hidden;
+}
+.side-piece {
+	position: absolute !important;
+	float: left !important;
+  	height: 100% !important;
+  	border-radius: 5px;
+  	border-style: solid;
+    	border-color: white;
+    	background-color: #9E6415;
+  	position: fixed !important;
+  	margin-left: -5% !important;
+  	margin-top: -3% !important;
+  	left: 0px;
+}
+.body-area {
+	margin-top: 5%;
+}
+.nav-logo {
+	margin-top: -12%
+}
+.container-post {
+	box-shadow: 10px 10px 5px #888888;
 }

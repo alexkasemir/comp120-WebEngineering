@@ -1,8 +1,17 @@
 {% block body_content %}
   <div class="container-post" id= "{{user_post.id}}" >
-    <div class="well">
-      Created by: {{user_post.creator}}
-    </div>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          
+          <a class="navbar-brand" href="#">{{user_post.creator}} Purred:</a>
+        </div>
+      </div>
+    </nav>
+    
+    <!--<div class="well">
+      {{user_post.creator}} Purred:
+    </div>-->
     {% if user_post.text_content %}
       <div class="post-content">
         <h1>{{user_post.text_content}}</h1>

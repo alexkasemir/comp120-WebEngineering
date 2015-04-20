@@ -28,11 +28,13 @@ import json
 from meows.forms import UserPostForm
 
 
+
 @login_required
 def index(request):
     user = request.user
     liked = User_Post.objects.filter(purrs_grrs=user)
     posts = cache.get("latest_posts")
+    form = UserPostForm()
     #print posts
     if not posts:  # new post has been created
         posts = User_Post.objects.order_by('-id')[:20]
@@ -41,7 +43,7 @@ def index(request):
         # context = RequestContext(request, {
         #     'latest_posts': posts,
         # })
-    return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked})
+    return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'form': form})
 
 
 @login_required
@@ -114,7 +116,11 @@ def hashTaggify(user, text):
     obj['user'] = str(user)
     obj['tags'] = hashtags
     json_obj = json.dumps(obj)
-    print json_obj
+    updateTags(user, hashtags)
+
+def updateTags(user, hashtags):
+    print "here"
+
 
 @login_required
 def post_like(request, user_post_id):
@@ -177,6 +183,10 @@ def who_purr_post(request, post_id):
 #create new user
 def register_user(request):
     form = RegistrationForm()
+    print form.fields
+    print "/n/n/n/n/n"
+    for field in form.fields:
+        field.widget.attrs = {'class':'form_control'}
     return render(request, 'meows/Pages/register.html', {'form': form})
 
 
@@ -189,11 +199,15 @@ def register(request):
             return redirect('/')
     else:
         form = RegistrationForm()
+        for field_name, field in form.fields.items():
+            field.widget.attrs['class'] = 'form-control'
     return render_to_response('meows/Pages/register.html', {'form': form}, context_instance=RequestContext(request))
 
 
 def login_user(request):
     form = AuthenticationForm()
+    for field_name, field in form.fields.items():
+        field.widget.attrs['class'] = 'form-control'
     return render(request, 'meows/Pages/login.html', {'form': form})
 
 
@@ -209,6 +223,8 @@ def login(request):
                     return redirect('/')
     else:
         form = AuthenticationForm()
+        for field_name, field in form.fields.items():
+            field.widget.attrs['class'] = 'form-control'
     return render_to_response('meows/Pages/login.html', {'form': form}, context_instance=RequestContext(request))
 
 

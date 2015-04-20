@@ -7,7 +7,8 @@
   <span class="center-block">
     {% if user.is_authenticated %}
     <h1> Hello {{user.username}}, do you want to purr? </h1>
-    <a class="btn btn-lg btn-default index_elems" href="/new_post">Create Purrr</a>
+    <!--<a class="btn btn-lg btn-default index_elems" href="/new_post">Create Purrr</a>-->
+    <a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal">Create Purr</a>
     {% endif %}
   </span>
   <div class="Add_Post_Button_Container center-block" >
@@ -22,7 +23,12 @@
           <p>There appears to be nothing here...</p>
       {% endif %}
     </div>
+    <div class="modal-holder">
+      {%include "meows/Pages/post_modal.html" with form=form %}
+    </div>
 {% endblock %}
+
+
 
 
 
