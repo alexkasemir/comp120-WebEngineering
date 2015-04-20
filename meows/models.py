@@ -39,6 +39,7 @@ class User_Post(models.Model):
     time_edited = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
     purrs_grrs = models.ManyToManyField(User, through='Feedback')
+    # grrs = models.ManyToManyField(User, related_name='grrs', through='Dislike')
 
     @staticmethod
     def create(text_cont):
@@ -54,6 +55,11 @@ class Feedback(models.Model):
     post_id = models.ForeignKey(User_Post)
     user_id = models.ForeignKey(User)
     purr_grr = models.CharField(max_length=1, choices=FEEDBACK_OPTIONS, blank=True)
+
+
+# class Dislike(models.Model):
+#     post_id = models.ForeignKey(User_Post)
+#     user_id = models.ForeignKey(User)
 
 
 class Friends(models.Model):
