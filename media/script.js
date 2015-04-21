@@ -120,7 +120,7 @@ $(document).ready(function(){
 	more_meows.click(function() {
 
 		for(var i in newPostStack){
-			var test =$("#latest_posts");
+			var test = $("#latest_posts");
 
 			test.prepend(newPostStack[i]);
 		}	

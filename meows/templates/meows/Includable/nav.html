@@ -11,7 +11,7 @@
         </a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-is-collapsed">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right nav-buttons-right">
         {% if user.is_authenticated %}
           <li>
             <a class="navbar-items" href="/accounts/logout">Logout</a>
@@ -24,6 +24,9 @@
             <a class="navbar-items" href="/accounts/register">Register</a>
           </li>
         {% endif %}
+            <li>
+                <a class="navbar-items" href="/api/docs">About</a>
+            </li>
         </ul>
     </div>
 </nav>

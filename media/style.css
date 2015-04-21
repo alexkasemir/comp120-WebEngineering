@@ -49,12 +49,17 @@ nav {
     	background-color: #9E6415;
   	position: fixed !important;
   	left: 0px;
+  	min-width: 100px;
+  	margin-top: 47px;
 }
 .body-area {
 	margin-top: 5%;
 }
 .nav-logo {
-	
+	margin-top: -15px;
+}
+.nav-buttons-right {
+	margin-right: 10px;
 }
 .container-post {
 	box-shadow: 10px 10px 5px #888888;
