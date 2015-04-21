@@ -25,6 +25,7 @@ from django.contrib.auth.decorators import login_required
 
 from meows.forms import AuthenticationForm, RegistrationForm
 import json
+from meows.purrtags import tags
 from meows.forms import UserPostForm
 
 
@@ -39,7 +40,6 @@ def index(request):
     posts = cache.get("latest_posts")
     form = UserPostForm()
     #print posts
-    if not posts:  # new post has been created
     feedback = cache.get("feedback")
     if (not posts):  # new post has been created
         posts = User_Post.objects.order_by('-id')[:20]
@@ -103,7 +103,7 @@ def create_post(request):
         form.save_m2m()
         text = user_post.text_content
         hashTaggify(request.user, text)
-        return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
+        return redirect('/')
         #return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
     else:
         return render(request, 'meows/Pages/new_post.html', {'form': form})
@@ -188,8 +188,7 @@ def post_dislike(request, user_post_id):
 #create new user
 def register_user(request):
     form = RegistrationForm()
-    print form.fields
-    print "/n/n/n/n/n"
+
     for field in form.fields:
         field.widget.attrs = {'class':'form_control'}
     return render(request, 'meows/Pages/register.html', {'form': form})
@@ -239,6 +238,7 @@ def logout(request):
 
 
 #API Functionality
+@login_required
 @api_view(['GET', 'POST'])
 def api_post_collection(request):
     if request.method == 'GET':
@@ -254,6 +254,7 @@ def api_post_collection(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@login_required
 @api_view(['GET'])
 def api_post_element(request, user_post_id):
     try:
@@ -268,10 +269,11 @@ def api_post_element(request, user_post_id):
 
 @api_view(['GET', 'POST'])
 def api_user_collection(request):
-    if request.method == 'GET':
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+    if request.user.is_superuser:
+        if request.method == 'GET':
+            users = User.objects.all()
+            serializer = UserSerializer(users, many=True)
+            return Response(serializer.data)
     elif request.method == 'POST':
         user_info = {"username": request.DATA.get('username'), "email": request.DATA.get('email')}
         serializer = UserSerializer(data=user_info)
