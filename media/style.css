@@ -31,6 +31,10 @@ nav {
 	margin-right: 10px !important;
 
 }
+.postInfo {
+	margin-right: 5%;
+	margin-left: 5%;
+}
 
 .Add_Post_Button_Container{
 	visibility: hidden;
@@ -44,8 +48,6 @@ nav {
     	border-color: white;
     	background-color: #9E6415;
   	position: fixed !important;
-  	margin-left: -5% !important;
-  	margin-top: -3% !important;
   	left: 0px;
 }
 .body-area {

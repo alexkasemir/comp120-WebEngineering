@@ -26,6 +26,7 @@ from django.contrib.auth.decorators import login_required
 from meows.forms import AuthenticationForm, RegistrationForm
 import json
 from meows.forms import UserPostForm
+from meows.purrtags import tagManager
 
 
 
@@ -33,14 +34,14 @@ from meows.forms import UserPostForm
 def index(request):
     user = request.user
     liked = User_Post.objects.filter(purrs_grrs=user)
-    #feedback = Feedback.objects.filter()
+    feedback = Feedback.objects.filter()
     #disliked = User_Post.objects.filter(grrs=user)
     most_recent = User_Post.objects.order_by('-id')[0]
     posts = cache.get("latest_posts")
     form = UserPostForm()
     #print posts
     if not posts:  # new post has been created
-    feedback = cache.get("feedback")
+        feedback = cache.get("feedback")
     if (not posts):  # new post has been created
         posts = User_Post.objects.order_by('-id')[:20]
         cache.set("latest_posts", posts)
@@ -92,6 +93,7 @@ def create_post(request):
     # cache.delete("latest_posts")
     # return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
     #post = User_Post()
+    manager = tagManager()
     user = request.user
     form = UserPostForm(request.POST, request.FILES)
 
@@ -102,40 +104,17 @@ def create_post(request):
         cache.delete("latest_posts")
         form.save_m2m()
         text = user_post.text_content
-        hashTaggify(request.user, text)
+        manager.postCreated(request.user, text)
         return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
         #return render(request, 'meows/Pages/detailsPage.html', {'user_post': user_post})
     else:
         return render(request, 'meows/Pages/new_post.html', {'form': form})
 
-def hashTaggify(user, text):
-    i = 0
-    hashtags = []
-    while i < len(text):
-        if text[i] == "#":
-            i +=  1
-            word = []
-            while i < len(text) and text[i] != " "  :
-                word.append(text[i])
-                i += 1
-            string = ''.join(word)
-            hashtags.append(str(string))
-
-        if i < len(text):
-            i += 1
-    obj = {}
-    obj['user'] = str(user)
-    obj['tags'] = hashtags
-    json_obj = json.dumps(obj)
-    updateTags(user, hashtags)
-
-def updateTags(user, hashtags):
-    print "here"
-
 
 @login_required
 def post_like(request, user_post_id):
    # print "LIKE!!!!!\n\n\n\n\n\n"
+    manager = tagManager()
     user = request.user
     # print user
     try:
@@ -154,14 +133,14 @@ def post_like(request, user_post_id):
         user_post.score += 1
         user_post.save()
         cache.delete("feedback")
-
+    manager.postLiked(user, user_post)
     return HttpResponse(status=201)
 
 
 @login_required
 def post_dislike(request, user_post_id):
    # print "DISLIKE!!!!!\n\n\n\n\n\n"
-
+    manager = tagManager()
     user = request.user
     try:
         user_post = User_Post.objects.get(pk=user_post_id)
@@ -179,6 +158,7 @@ def post_dislike(request, user_post_id):
         user_post.score -= 1
         user_post.save()
         cache.delete("feedback")
+    manager.postDisliked(user, user_post)
     return HttpResponse(status=201)
 
 
