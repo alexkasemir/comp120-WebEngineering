@@ -7,14 +7,11 @@ from django.contrib.auth.models import UserManager
 
 
 class Hashtag(models.Model):
-    content = models.CharField()
+    content = models.CharField(max_length=254)
     count = models.IntegerField(default=0)
 
 
-class Preference(models.Model):
-    user_id = models.ForeignKey(User)
-    hashtag_id = models.ForeignKey(Hashtag)
-    score = models.IntegerField(default=0)
+
 
 
 class User(AbstractBaseUser):
@@ -41,6 +38,12 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.first_name
+
+
+class Preference(models.Model):
+    user_id = models.ForeignKey(User)
+    hashtag_id = models.ForeignKey(Hashtag)
+    score = models.IntegerField(default=0)
 
 
 class User_Post(models.Model):
