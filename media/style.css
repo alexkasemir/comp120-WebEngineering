@@ -54,8 +54,11 @@ nav {
 	margin-top: 5%;
 }
 .nav-logo {
-	margin-top: -12%
+	
 }
 .container-post {
 	box-shadow: 10px 10px 5px #888888;
+}
+.login-button {
+	margin-top: 10px;
 }

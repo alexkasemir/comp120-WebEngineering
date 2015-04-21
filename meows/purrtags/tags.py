@@ -6,7 +6,7 @@ class tagManager:
 	def postLiked(self, user, text):
 		self.hashTaggify(user, text, True)
 	def postDisliked(self, user, text):
-		self.hashTaggify(user, text, false)
+		self.hashTaggify(user, text, False)
 		
 	def updateTags(self, user, tags):
 		print "there\n\n\n\n\n\n\n\n\n\n"
@@ -26,10 +26,11 @@ class tagManager:
 
 			if i < len(text):
 			    i += 1
-			obj = {}
-			obj['user'] = str(user)
-			obj['tags'] = hashtags
-			json_obj = json.dumps(obj)
-			self.updateTags(user, hashtags)
+		
+		obj = {}
+		obj['user'] = str(user)
+		obj['tags'] = hashtags
+		json_obj = json.dumps(obj)
+		self.updateTags(user, hashtags)
 
 	
