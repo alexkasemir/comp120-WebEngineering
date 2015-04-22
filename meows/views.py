@@ -233,6 +233,12 @@ def api_post_collection(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def api_post_group(request, user_post_id):
+    posts = User_Post.objects.filter(pk__lt=user_post_id)[:20]
+    serializer = PostSerializer(posts, many=True)
+    return Response(serializer.data)
+
 
 @login_required
 @api_view(['GET'])
