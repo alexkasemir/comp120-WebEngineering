@@ -1,6 +1,10 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
+<<<<<<< HEAD
 from meows.models import User, User_Post, Feedback, Hashtag, Preference
+=======
+from meows.models import User, User_Post, Feedback, Hashtag
+>>>>>>> c863f75d64f677dffac4456df054a071ec3ef22d
 import time
 
 from django.http import HttpResponseRedirect
@@ -78,6 +82,28 @@ def index(request):
     #print my_preferences
     return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'feedback': feedback, 'form': form})
 
+@login_required
+def user_index(request, user):
+    
+    form = UserPostForm()
+    try: 
+        posts = User_Post.objects.filter(creator=user)
+    except User_Post.DoesNotExist:
+        return render(request, 'meows/Pages/hashtag_index.html', {'form': form, 'user': user})
+
+    return render(request, 'meows/Pages/hashtag_index.html', {'latest_posts': posts, 'form': form, 'user': user})
+
+@login_required
+def hashtag_index(request, tag):
+    form = UserPostForm()
+    
+    try:
+        hashtag = Hashtag.objects.get(content=tag)
+    except Hashtag.DoesNotExist:
+        return render(request, 'meows/Pages/hashtag_index.html', {'form': form, 'tag': tag})
+    
+    posts = User_Post.objects.filter(hashtags=hashtag)
+    return render(request, 'meows/Pages/hashtag_index.html', {'latest_posts': posts, 'form': form, 'tag': tag})
 
 @login_required
 def detail(request, user_post_id):

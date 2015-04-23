@@ -1,12 +1,15 @@
 <div class="side-bar">
 	<div class="row">
-		Trending Tags:
+		Trending Tags: <br>
+		{% if trending_tags %}
+			{% for tag in trending %}
+            			<a href='/tag/{{tag}}'>#{{tag}}</a>	
+          		{% endfor %}
+		{% endif %}
 	</div>
 	<div class="row">
-		Trending Tags:
-	</div>
-	<div class="row">
-		Your Tags:
+		Your Tags:<br>
+		
 	</div>
 	
 </div>
