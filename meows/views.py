@@ -38,7 +38,7 @@ from meows.purrtags import tagManager
 def index(request):
     manager = tagManager()
     user = request.user
-    my_hashtags = Preference.objects.filter(user_id=user)
+    #my_hashtags = Preference.objects.filter(user_id=user)
     liked = User_Post.objects.filter(purrs_grrs=user)
     #disliked = User_Post.objects.filter(grrs=user)
     #most_recent = User_Post.objects.order_by('-id')[0]
@@ -68,7 +68,16 @@ def index(request):
         if hashtag.pk is not last_hashtag:
             trending.append(hashtag.content)
             last_hashtag = hashtag.pk
-    print trending
+    cache.delete("trending")
+    cache.set("trending", trending)
+
+    my_hashtags = Preference.objects.filter(user_id=user).order_by('-score')[:5]
+    my_tags = []
+    for hashtag in my_hashtags:
+        #h = Hashtag.objects.get(pk=hashtag.hashtag_id)
+        my_tags.append(hashtag.hashtag_id.content)
+    cache.delete("my_tags")
+    cache.set("my_tags", my_tags)
     # trending = []
     # for post in posts:
     #     trending.extend(post.hashtags.all())
@@ -76,32 +85,34 @@ def index(request):
     # t = trending.order_by('score')[:5]
     #pop_hashtags = posts.hashtags.order_by(score)[:5]
     #print pop_hashtags
-    my_preferences = manager.select_posts(my_hashtags, posts)
+    #my_preferences = manager.select_posts(my_hashtags, posts)
     #print my_preferences
-    return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'feedback': feedback, 'form': form})
+    return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'feedback': feedback, 'form': form, 'trending_tags': trending, 'my_tags':my_tags})
 
 @login_required
 def user_index(request, user):
-    
+    trending = cache.get("trending")
+    my_tags = cache.get("my_tags")
     form = UserPostForm()
     try: 
         posts = User_Post.objects.filter(creator=user)
     except User_Post.DoesNotExist:
         return render(request, 'meows/Pages/hashtag_index.html', {'form': form, 'user': user})
 
-    return render(request, 'meows/Pages/hashtag_index.html', {'latest_posts': posts, 'form': form, 'user': user})
+    return render(request, 'meows/Pages/hashtag_index.html', {'latest_posts': posts, 'form': form, 'user': user, 'trending_tags': trending, 'my_tags':my_tags})
 
 @login_required
 def hashtag_index(request, tag):
     form = UserPostForm()
-    
+    trending = cache.get("trending")
+    my_tags = cache.get("my_tags")
     try:
         hashtag = Hashtag.objects.get(content=tag)
     except Hashtag.DoesNotExist:
         return render(request, 'meows/Pages/hashtag_index.html', {'form': form, 'tag': tag})
     
     posts = User_Post.objects.filter(hashtags=hashtag)
-    return render(request, 'meows/Pages/hashtag_index.html', {'latest_posts': posts, 'form': form, 'tag': tag})
+    return render(request, 'meows/Pages/hashtag_index.html', {'latest_posts': posts, 'form': form, 'tag': tag, 'trending_tags': trending, 'my_tags':my_tags})
 
 @login_required
 def detail(request, user_post_id):

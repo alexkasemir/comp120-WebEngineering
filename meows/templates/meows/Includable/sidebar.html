@@ -2,13 +2,20 @@
 	<div class="row">
 		Trending Tags: <br>
 		{% if trending_tags %}
-			{% for tag in trending %}
+			{% for tag in trending_tags %}
             			<a href='/tag/{{tag}}'>#{{tag}}</a>	
+            			<br>
           		{% endfor %}
 		{% endif %}
 	</div>
 	<div class="row">
 		Your Tags:<br>
+		{% if my_tags %}
+			{% for tag in my_tags %}
+            			<a class='fun-links' href='/tag/{{tag}}'>#{{tag}}</a>	
+            			<br>
+          		{% endfor %}
+		{% endif %}
 		
 	</div>
 	

@@ -12,8 +12,6 @@ class Hashtag(models.Model):
     #time_edited = models.DateTimeField(auto_now=True)
 
 
-
-
 class User(AbstractBaseUser):
     #user = models.OneToOneField(User)
     username = models.CharField(max_length=25, unique=True)

@@ -60,7 +60,7 @@ class tagManager:
             if text[i] == "#":
                 i += 1
                 word = []
-                while i < len(text) and text[i] != " ":
+                while i < len(text) and text[i] != " " and text[i] != '\r' and text[i] != '\n':
                     word.append(text[i])
                     i += 1
                 string = ''.join(word)
