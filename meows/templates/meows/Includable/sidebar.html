@@ -1,9 +1,11 @@
+{% if user.is_authenticated %}
 <div class="side-bar">
+	<br>
 	<div class="row">
 		<a href="/prefs/" style="color:white">Your Reccomended Purrs</a><br>
 	</div>
-	<div class="row">
-		Trending Tags: <br>
+	<div class="row" style="text-center">
+		<h5>Trending Tags:</h5> <br>
 		{% if trending_tags %}
 			{% for tag in trending_tags %}
             			<a href='/tag/{{tag}}' class="fun-links">#{{tag}}</a>
@@ -24,3 +26,4 @@
 	</div>
 	
 </div>
+{% endif %}
