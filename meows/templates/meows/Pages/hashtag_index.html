@@ -1,0 +1,32 @@
+{% extends "meows/Extendable/base.html" %}
+
+{%block page_title %}Welcome to Purrer! {%endblock %}
+
+{% block body_content %}
+
+  <span class="center-block">
+    {% if tag %}
+      <h1>Posts Purrtagged with #{{tag}}:</h2>
+    {% else %}
+      <h1>Posts based on {{user}}'s preferences: </h1>
+    {% endif %}
+  <a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal">Create Purr</a>
+  </span>
+  
+    <div id="latestposts">
+      {% if latest_posts %}
+          {% for user_post in latest_posts %}
+            {% include "meows/Pages/details.html" %}
+          {% endfor %}
+      {% else %}
+          {% if tag %}
+            <h2 class="text-center">Nothing seems to be tagged with #{{tag}} :( </h2>
+          {% else %}
+            <h1>{{user}} needs to purr more :( </h1>
+          {% endif %}
+      {% endif %}
+    </div>
+    <div class="modal-holder">
+      {%include "meows/Pages/post_modal.html" with form=form %}
+    </div>
+{% endblock %}

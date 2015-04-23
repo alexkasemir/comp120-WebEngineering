@@ -11,8 +11,15 @@
         </a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-is-collapsed">
+        
         <ul class="nav navbar-nav navbar-right nav-buttons-right">
         {% if user.is_authenticated %}
+          <li>
+                <input type="text" class="form-control" id="search-input" placeholder="Hashtag Search">
+          </li>
+          <li>
+              <button class="btn btn-default search-button">Search</button>
+          </li>
           <li>
             <a class="navbar-items" href="/accounts/logout">Logout</a>
           </li>
