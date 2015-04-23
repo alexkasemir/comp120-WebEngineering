@@ -4,6 +4,7 @@ from meows import views
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^tag/(?P<tag>\S+)$', views.hashtag_index),
+    url(r'^prefs', views.user_pref),
     url(r'^user/(?P<user>\S+)$', views.user_index),
     url(r'^(?P<user_post_id>\d+)/$', views.detail, name='detail'),
     url(r'^new_post', views.new_post, name='new_post'),

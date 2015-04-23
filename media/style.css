@@ -39,6 +39,13 @@ nav {
 .Add_Post_Button_Container{
 	visibility: hidden;
 }
+.searcher {
+	margin-top: 3%;
+}
+.fun-links {
+	color: white;
+	font-style: oblique;
+}
 .side-piece {
 	position: absolute !important;
 	float: left !important;
@@ -51,6 +58,7 @@ nav {
   	left: 0px;
   	min-width: 100px;
   	margin-top: 47px;
+  	color:white;
 }
 .body-area {
 	margin-top: 5%;
