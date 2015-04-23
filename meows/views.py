@@ -90,6 +90,17 @@ def index(request):
     return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'feedback': feedback, 'form': form, 'trending_tags': trending, 'my_tags':my_tags})
 
 @login_required
+def user_pref(request):
+    manager = tagManager()
+    form = UserPostForm()
+    user = request.user
+    posts = User_Post.objects.order_by('-id')[:100]
+    my_hashtags = Preference.objects.filter(user_id=user)
+    my_preferences = manager.select_posts(my_hashtags, posts)
+    return render(request, 'meows/Pages/hashtag_index.html', {'latest_posts': my_preferences, 'form': form, 'user': user})
+
+
+@login_required
 def user_index(request, user):
     trending = cache.get("trending")
     my_tags = cache.get("my_tags")
