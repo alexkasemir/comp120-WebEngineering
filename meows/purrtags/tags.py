@@ -71,3 +71,20 @@ class tagManager:
         print "here"
         return hashtags
 
+    def select_posts(self, hashtags, posts):
+    # ordered array of (posts, score) pairs
+        ordered_posts = []
+
+        for meow in posts:
+            score = 0;
+            for tag in meow.hashtags.all():
+                for user_tag in hashtags:
+                    if user_tag.hashtag_id == tag:
+                        score += user_tag.score
+                        break
+            ordered_posts.append([meow, score])
+
+        ordered_posts.sort(key=lambda x: -x[1])
+
+        return [x[0] for x in ordered_posts]
+

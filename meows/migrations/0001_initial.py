@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
                 ('icon_URL', models.ImageField(upload_to=b'')),
                 ('active', models.BooleanField(default=True)),
                 ('member_since', models.DateTimeField(auto_now_add=True)),
+                ('is_superuser', models.BooleanField(default=False)),
             ],
             options={
                 'abstract': False,
@@ -82,9 +83,33 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Hashtag',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('content', models.CharField(max_length=254)),
+                ('count', models.IntegerField(default=0)),
+                ('time_edited', models.DateTimeField(auto_now=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Posts',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Preference',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('score', models.IntegerField(default=0)),
+                ('hashtag_id', models.ForeignKey(to='meows.Hashtag')),
+                ('user_id', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -102,6 +127,7 @@ class Migration(migrations.Migration):
                 ('time_created', models.DateTimeField(auto_now_add=True)),
                 ('time_edited', models.DateTimeField(auto_now=True)),
                 ('active', models.BooleanField(default=True)),
+                ('hashtags', models.ManyToManyField(to='meows.Hashtag')),
                 ('purrs_grrs', models.ManyToManyField(to=settings.AUTH_USER_MODEL, through='meows.Feedback')),
             ],
             options={
@@ -148,6 +174,12 @@ class Migration(migrations.Migration):
             model_name='albums',
             name='post_id',
             field=models.ForeignKey(to='meows.User_Post'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='user',
+            name='hashtags',
+            field=models.ManyToManyField(to='meows.Hashtag', through='meows.Preference'),
             preserve_default=True,
         ),
     ]

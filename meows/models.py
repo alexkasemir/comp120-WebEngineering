@@ -9,7 +9,7 @@ from django.contrib.auth.models import UserManager
 class Hashtag(models.Model):
     content = models.CharField(max_length=254)
     count = models.IntegerField(default=0)
-
+    #time_edited = models.DateTimeField(auto_now=True)
 
 
 
@@ -48,6 +48,7 @@ class Preference(models.Model):
 
 class User_Post(models.Model):
     creator = models.TextField(max_length=255)
+    # user = models.ForeignKey(User)
     contains_image = models.BooleanField(default=False)
     image_URL = models.ImageField(blank=True, null=True)
     text_content = models.TextField(max_length=255)

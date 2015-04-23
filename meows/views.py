@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from meows.models import User, User_Post, Feedback
+from meows.models import User, User_Post, Feedback, Hashtag, Preference
 import time
 
 from django.http import HttpResponseRedirect
@@ -26,6 +26,7 @@ from django.contrib.auth.decorators import login_required
 from meows.forms import AuthenticationForm, RegistrationForm
 import json
 from meows.purrtags import tags
+from meows.purrtags import my_posts
 from meows.forms import UserPostForm
 from meows.purrtags import tagManager
 
@@ -33,11 +34,14 @@ from meows.purrtags import tagManager
 
 @login_required
 def index(request):
+    manager = tagManager()
     user = request.user
+    my_hashtags = Preference.objects.filter(user_id=user)
     liked = User_Post.objects.filter(purrs_grrs=user)
     #disliked = User_Post.objects.filter(grrs=user)
-    most_recent = User_Post.objects.order_by('-id')[0]
+    #most_recent = User_Post.objects.order_by('-id')[0]
     posts = cache.get("latest_posts")
+
     form = UserPostForm()
     #print posts
 
@@ -49,12 +53,29 @@ def index(request):
         # template = loader.get_template('meows/Pages/index.html')
         # context = RequestContext(request, {
         #     'latest_posts': posts,
-    if most_recent.pk > posts[0].pk:
-        posts = User_Post.objects.order_by('-id')[:20]
-        cache.set("latest_posts", posts)
+    # if most_recent.pk > posts[0].pk:
+    #     posts = User_Post.objects.order_by('-id')[:20]
+    #     cache.set("latest_posts", posts)
     if not feedback:
         feedback = Feedback.objects.filter(post_id=posts)
 
+    recent_hashtags = Hashtag.objects.filter(user_post=posts).order_by('-count')
+    trending = []
+    last_hashtag = 0
+    for hashtag in recent_hashtags:
+        if hashtag.pk is not last_hashtag:
+            trending.append(hashtag.content)
+            last_hashtag = hashtag.pk
+    print trending
+    # trending = []
+    # for post in posts:
+    #     trending.extend(post.hashtags.all())
+    #     print trending
+    # t = trending.order_by('score')[:5]
+    #pop_hashtags = posts.hashtags.order_by(score)[:5]
+    #print pop_hashtags
+    my_preferences = manager.select_posts(my_hashtags, posts)
+    #print my_preferences
     return render(request, 'meows/Pages/index.html', {'latest_posts': posts, 'liked_posts': liked, 'feedback': feedback, 'form': form})
 
 
@@ -125,6 +146,7 @@ def post_like(request, user_post_id):
     did_purr = user_post.purrs_grrs.filter(pk=user_post_id)
     if did_purr:
         print "You can't purr that"
+        return HttpResponse(status=401)
     else:
         feedback = Feedback(post_id=user_post, user_id=user, purr_grr='p')
         feedback.save()
@@ -150,6 +172,7 @@ def post_dislike(request, user_post_id):
     did_grr = user_post.purrs_grrs.filter(pk=user.pk)
     if did_grr:
         print "no"
+        return HttpResponse(status=401)
     else:
         cache.delete("latest_posts")
         feedback = Feedback(post_id=user_post, user_id=user, purr_grr='g')
