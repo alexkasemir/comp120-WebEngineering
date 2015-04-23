@@ -41,7 +41,7 @@ def index(request):
     #my_hashtags = Preference.objects.filter(user_id=user)
     liked = User_Post.objects.filter(purrs_grrs=user)
     #disliked = User_Post.objects.filter(grrs=user)
-    #most_recent = User_Post.objects.order_by('-id')[0]
+    most_recent = User_Post.objects.order_by('-id')[0]
     posts = cache.get("latest_posts")
 
     form = UserPostForm()
@@ -55,9 +55,9 @@ def index(request):
         # template = loader.get_template('meows/Pages/index.html')
         # context = RequestContext(request, {
         #     'latest_posts': posts,
-    # if most_recent.pk > posts[0].pk:
-    #     posts = User_Post.objects.order_by('-id')[:20]
-    #     cache.set("latest_posts", posts)
+    if most_recent.pk > posts[0].pk:
+        posts = User_Post.objects.order_by('-id')[:20]
+        cache.set("latest_posts", posts)
     if not feedback:
         feedback = Feedback.objects.filter(post_id=posts)
 
