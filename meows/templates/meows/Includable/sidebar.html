@@ -1,9 +1,10 @@
 <div class="side-bar">
+	<br>
 	<div class="row">
 		<a href="/prefs/" style="color:white">Your Reccomended Purrs</a><br>
 	</div>
 	<div class="row">
-		Trending Tags: <br>
+		<h5>Trending Tags: </h5><br>
 		{% if trending_tags %}
 			{% for tag in trending_tags %}
             			<a href='/tag/{{tag}}' class="fun-links">#{{tag}}</a>
@@ -13,7 +14,7 @@
 		{% endif %}
 	</div>
 	<div class="row">
-		Your Tags:<br>
+		<h5>Your Tags:</h5><br>
 		{% if my_tags %}
 			{% for tag in my_tags %}
             			<a class='fun-links' href='/tag/{{tag}}'>#{{tag}}</a>	
