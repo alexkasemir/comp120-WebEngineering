@@ -1,10 +1,8 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-<<<<<<< HEAD
+
 from meows.models import User, User_Post, Feedback, Hashtag, Preference
-=======
-from meows.models import User, User_Post, Feedback, Hashtag
->>>>>>> c863f75d64f677dffac4456df054a071ec3ef22d
+
 import time
 
 from django.http import HttpResponseRedirect
